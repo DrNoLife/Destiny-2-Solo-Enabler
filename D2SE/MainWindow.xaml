@@ -1,0 +1,51 @@
+﻿<Window x:Class="D2SoloEnabler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:D2SoloEnabler"
+        mc:Ignorable="d"
+        Title="Destiny 2 Solo Enabler" Height="350" Width="325"
+        ResizeMode="NoResize">
+    <Grid>
+
+        <!-- Define Columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Define Rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <!-- Title textblock -->
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="Solo-Enabler" FontWeight="Bold" FontSize="36" FontFamily="Bahnschrift Light" TextAlignment="Center" FontStyle="Normal">
+        </TextBlock>
+
+        <!-- Status textblock -->
+        <TextBlock Grid.Column="1" Grid.Row="2" Margin="0 15 0 0" VerticalAlignment="Center">
+            <Run FontWeight="Bold" FontFamily="Bahnschrift" FontSize="14">Status:</Run>
+            <LineBreak />
+            <Run x:Name="currentStatus" FontFamily="Bahnschrift Light" FontStyle="Italic">Disabled</Run>
+        </TextBlock>
+
+        <!-- Informative textblock -->
+        <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Margin="0 10" Foreground="#FFCBCBCB" FontStyle="Italic" TextWrapping="Wrap">
+            This program makes use of the Windows firewall. <LineBreak/>
+            This is also the reason why it needs administrator priviledges, and thus why there is no risk for eventuel bans.
+        </TextBlock>
+
+        <!-- Activation / Deactivation button -->
+        <Button x:Name="soloplayButton" Grid.Column="1" Grid.Row="4" Content="Enable Soloplay" FontWeight="Bold" FontSize="24" FontFamily="Bahnschrift" Click="soloplayButton_Click">
+
+        </Button>
+    </Grid>
+</Window>
