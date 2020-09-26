@@ -1,2 +1,2 @@
-# Destiny-2-Solo-Enabler
-Main repo for the D2SE program.
+# Destiny 2 Solo Enabler
+ Repo containing the C#, XAML and various assets for the D2SE program
