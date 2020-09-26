@@ -1,6 +1,6 @@
 # Destiny 2 Solo Enabler
 The official repo for the program Destiny 2 Solo Enabler, or shorthand: D2SE.
-Further down the page exists a FAQ, which should hopefully answer any questions you might have. However if you are still left with questions, create an Issue, and I'll respond to you!
+Further down the page exists an FAQ, which should hopefully answer any questions you might have. However if you are still left with questions, create an Issue, and I'll respond to you!
 
 ## FAQ
 
