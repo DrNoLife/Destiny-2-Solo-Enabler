@@ -11,6 +11,9 @@ For people simply curious as to how the program looks (I'm one of those people, 
 
 ![Image depicting the UI of the Destiny 2 Solo Enabler program.](https://i.imgur.com/tsZdZQO.png)
 
+### How does one use D2SE?
+When you have downloaded the program, you start up Destiny 2. Make sure you're in orbit, then you tab out and enable the program. After doing this, you can search for a strike, forge og whatever. When you want to turn it off, simply click the button in the program once again.
+
 
 ### Why did I create D2SE?
 It's a program I decided to develop, because I got more and more annoyed with Bungies decisions to focus on Bounties which made players compete with eachother in Strikes.
@@ -28,6 +31,9 @@ Yes, I'm quite sure! The reason for this behaviour is the same as browsers block
 ### Why does the program require Administrator priviledges?
 Firewall handling. 
 That is the reason for the prompt asking for admin priviledges. Windows has made sure a program can't change the firewall without having such rights (which is a good thing). This in turn means, the program needs such rights, since that's how it does its thing!
+
+### The program does not work! Why?
+Make sure you're giving it admin priviledges. Other than that, make sure you have the .NET Framework installed (should be preinstalled on any newer Windows 10 installation, but if you are having issues, try reinstalling the latest version).
 
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure thr programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
