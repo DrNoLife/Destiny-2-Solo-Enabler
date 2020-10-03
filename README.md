@@ -50,6 +50,13 @@ Incredibly enough, Microsofts documentation for firewall handling via C# is... L
 
 Feel free to checkout the Soloplay.cs file, inside there are 3 methods: One returns a bool dependent on if a FW rule already exists; one creates a firewall rule with settings given to it via its parameters; the last one goes through the entire FW rules list, and deletes whatever firewall rule it finds, if it matches the supplied firewall rule name.
 
+### What guarantee do you have this won't ban anyone? ([source](https://www.reddit.com/r/DestinyTheGame/comments/j4fn2g/how_to_play_all_destiny_2_content_solo_dont_have/g7ilaeh?utm_source=share&utm_medium=web2x&context=3))
+Good question! A complete guarantee: None.
+
+However based on emphirical evidence, I can say that I've not experienced any problems. The very core of the program is based on a PowerShell script which has been floating around this subreddit before, and it has been used without problems.
+
+So to answer your question, all i can say is: I've been using this program for the last week, the same has a buddy of mine. The concept of using the firewall to enable soloplay has been used by the community for a long time, and personally I've used that trick in the last 6 months. All without any problems.
+
 ## Credits
 Finding out what ports to block was not my doing. On the DestinyTheGame subreddit already exists a PowerShell script which does what my program does. That is from where I got the port range. I would love to be able to just thank the creator of the script, however I can't seem to find out who exactly created it. Many users has posted the same script many times. So let this be a **thank you** to every single person out there posting the script!
 
