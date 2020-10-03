@@ -6,6 +6,7 @@ Further down the page exists an FAQ, which should hopefully answer any questions
 
 ### What is D2SE?
 D2SE is a program which creates Firewall rules and blocks out ports used by Destiny 2 (or well, rather Steam itself) for matchmaking. This enables the user of the program, to load into an empy strike, or an empty forge. Basically, it allows the user to not be matches up with other players.
+Not only does it work for strikes, but any matchmade activity, i.e. strikes, patrol zones, story missions, raids etc...
 
 For people simply curious as to how the program looks (I'm one of those people, wondering about the UI/UX before downloading a program), I've decided to include this image.
 
@@ -37,6 +38,12 @@ Make sure you're giving it admin priviledges. Other than that, make sure you hav
 
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure thr programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
+
+### I enabled the program, but the game won't load any strikes or anything.
+When using this program, it takes longer to find matches to load into. From my testing, it takes roughly 40 seconds longer to find a strike to load into. Which means, roughly after 1 minute the game finds a strike I can load into.
+
+### What happens when I disable the program while in a strike or some other activity?
+The game will then be able to matchmake other people into your session. Which simply means, people will join you. Sometimes it takes some time (longest I've experienced was 2 minutes), other times it'll be almost instantly (shortest I've experienced was less than 5 seconds after disabling, two people joined my strike).
 
 ### How was the program developed?
 Incredibly enough, Microsofts documentation for firewall handling via C# is... Lacking, if I were to phrase it kindly. But after a lot of Google Searching for information about this subject, I notices a namespace called _NetFwTypeLib_. This namespace (if I am remembering correctly), came from the NuGet package "Firewallmanager" created by cyberxander90. However, this also didn't have any documentation. But the combined strength of Google searches and randomly typing stuff to see what I could set, allowed me to find the right combination.
