@@ -12,6 +12,14 @@ For people simply curious as to how the program looks (I'm one of those people, 
 
 ![Image depicting the UI of the Destiny 2 Solo Enabler program.](https://i.imgur.com/b0s1VTP.png)
 
+### What is the "Minimized UI" version?
+It's exactly what the name suggests! The core of the program is the same, but the interface presented to the user is changed. The window itself is smaller, the text and button are smaller, and I completely removed the middle text. 
+This came at the request of u/WrongWayFarer and it was a good idea, so I decided to have two versions of the UI.
+You can see the difference between the two here:
+
+![The difference between the two versions of the program.](https://i.imgur.com/STP92Cr.png)
+
+
 ### How does one use D2SE?
 When you have downloaded the program, you start up Destiny 2. Make sure you're in orbit, then you alt-tab out and enable the program. After doing this, you can search for a strike, forge, or whatever. When you want to turn it off, simply click the button in the program once again.
 
