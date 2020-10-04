@@ -40,7 +40,7 @@
         <!-- Informative textblock -->
         <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Margin="0 10" Foreground="#FFCBCBCB" FontStyle="Italic" TextWrapping="Wrap">
             This program makes use of the Windows firewall. <LineBreak/>
-            This is also the reason why it needs administrator priviledges, and thus why there is no risk for eventuel bans.
+            The program is not talking to the game, changing anything in the game, or reading anything from the game. Therefore a ban is extremely unlikely.
         </TextBlock>
 
         <!-- Activation / Deactivation button -->
