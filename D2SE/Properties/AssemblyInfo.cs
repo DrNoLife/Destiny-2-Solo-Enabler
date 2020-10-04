@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Destiny 2 Solo-Enabler")]
-[assembly: AssemblyDescription("A program developed to give Destiny 2 players an option to play strikes and other activities, without any interference from other players.")]
+[assembly: AssemblyDescription("A program developed to give Destiny 2 players an option to play strikes, and other activities, without any interference from other players.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DNL Software")]
 [assembly: AssemblyProduct("Destiny 2 Solo-Enabler")]

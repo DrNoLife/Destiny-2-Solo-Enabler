@@ -26,7 +26,6 @@ namespace D2SoloEnabler
                     return true;
                 }
             }
-
             return false;
         }
 
