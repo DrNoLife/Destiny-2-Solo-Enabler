@@ -61,16 +61,8 @@ namespace D2SoloEnabler
 
         private void statusHandling(bool isActive)
         {
-            if (isActive)
-            {
-                currentStatus.Text = "Enabled.";
-                soloplayButton.Content = "Disable soloplay";
-            }
-            else
-            {
-                currentStatus.Text = "Disabled.";
-                soloplayButton.Content = "Enable soloplay";
-            }
+            currentStatus.Text = isActive ? "Enabled." : "Disabled.";
+            soloplayButton.Content = isActive ? "Disable soloplay" : "Enable soloplay";
         }
     }
 }

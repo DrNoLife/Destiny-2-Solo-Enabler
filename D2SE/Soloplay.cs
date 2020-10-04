@@ -59,10 +59,7 @@ namespace D2SoloEnabler
             inboundRule.Description = "Used by the program Solo Enabler. Its use is to enable solo play in Destiny 2.";
 
             // Set the direction.
-            if (isOut)
-                inboundRule.Direction = NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT;
-            else
-                inboundRule.Direction = NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
+            inboundRule.Direction = isOut ? NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT : NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
 
             // Make sure rule is enabled.
             inboundRule.Enabled = true;
@@ -71,10 +68,7 @@ namespace D2SoloEnabler
             inboundRule.Name = ruleName;
 
             // Make sure to set the protocol before the ports. TCP = 6. UDP = 17.
-            if (isUDP)
-                inboundRule.Protocol = (int)NetFwTypeLib.NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_UDP;
-            else
-                inboundRule.Protocol = (int)NetFwTypeLib.NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP;
+            inboundRule.Protocol = (int)(isUDP ? NetFwTypeLib.NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_UDP : NetFwTypeLib.NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP);
 
             // Set the ports.
             inboundRule.RemotePorts = portValue;
