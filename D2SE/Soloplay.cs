@@ -16,8 +16,6 @@ namespace D2SoloEnabler
         /// <returns>true if rule exists, otherwise false.</returns>
         public static bool DoesFWRuleExist(string ruleName)
         {
-            bool ruleExists = false;
-
             Type tNetFwPolicy2 = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
             INetFwPolicy2 fwPolicy2 = (INetFwPolicy2)Activator.CreateInstance(tNetFwPolicy2);
 
@@ -25,15 +23,11 @@ namespace D2SoloEnabler
             {
                 if (rule.Name == ruleName)
                 {
-                    ruleExists = true;
+                    return true;
                 }
             }
 
-            // If rule exists, return true.. Otherwise false.
-            if (ruleExists)
-                return true;
-            else
-                return false;
+            return false;
         }
 
         /// <summary>
