@@ -10,11 +10,10 @@ It works on any matchmade activity, i.e. strikes, patrol zones, story missions, 
 
 For people simply curious as to how the program looks (I'm one of those people, wondering about the UI/UX before downloading a program), I've decided to include this image.
 
-![Image depicting the UI of the Destiny 2 Solo Enabler program.](https://i.imgur.com/tsZdZQO.png)
+![Image depicting the UI of the Destiny 2 Solo Enabler program.](https://i.imgur.com/b0s1VTP.png)
 
 ### How does one use D2SE?
 When you have downloaded the program, you start up Destiny 2. Make sure you're in orbit, then you alt-tab out and enable the program. After doing this, you can search for a strike, forge, or whatever. When you want to turn it off, simply click the button in the program once again.
-
 
 ### Why did I create D2SE?
 It's a program I decided to develop, because I got more and more annoyed with Bungie's decisions to focus on Bounties which made players compete with each other in Strikes.
@@ -35,6 +34,7 @@ That is the reason for the prompt asking for admin priviledges. Windows has made
 
 ### The program does not work! Why?
 Make sure you're giving it admin priviledges. Other than that, make sure you have the .NET Framework installed (should be preinstalled on any newer Windows 10 installation, but if you are having issues, try reinstalling the latest version).
+You also need to make sure you actually have the Windows firewall activated. The program relies on it, therefore it won't function without it.
 
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure the programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
@@ -56,6 +56,13 @@ Good question! A complete guarantee: None.
 However based on emphirical evidence, I can say that I've not experienced any problems. The very core of the program is based on a PowerShell script which has been floating around this subreddit before, and it has been used without problems.
 
 So to answer your question, all I can say is: I've been using this program for the last week, the same has a buddy of mine. The concept of using the firewall to enable soloplay has been used by the community for a long time, and personally I've used that trick in the last 6 months. All without any problems.
+
+### Does it work on Consoles as well?
+No it does not. It's a program which makes use of an API in order to talk with the Windows firewall. Meaning, if you're not using the Windows firewall, the program will not work.
+This unfortunately also means it won't work on Linux (well, since it requires .NET Framework, it won't work anyways, but yeah.)
+
+### What's up with the Shimoneta picture?
+It's an amazing series. Can only recommend it to people. A funny show which held my attention through the entire show!
 
 ## Credits
 Finding out what ports to block was not my doing. On the DestinyTheGame subreddit there already exists a PowerShell script which does what my program does. That is from where I got the port range. I would love to be able to just thank the creator of the script, however I can't seem to find out who exactly created it. Many users has posted the same script many times. So let this be a **thank you** to every single person out there posting the script!
