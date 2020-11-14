@@ -44,6 +44,10 @@ That is the reason for the prompt asking for admin priviledges. Windows has made
 Make sure you're giving it admin priviledges. Other than that, make sure you have the .NET Framework installed (should be preinstalled on any newer Windows 10 installation, but if you are having issues, try reinstalling the latest version).
 You also need to make sure you actually have the Windows firewall activated. The program relies on it, therefore it won't function without it.
 
+### Does it work with other Firewalls than the Windows one?
+No, unfortunately not. It uses namespaces which works with the Windows Firewall, and not thirdparty ones (e.g. Kaspersky). 
+So make sure you're only using the Windows one.
+
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure the programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
 
