@@ -48,6 +48,8 @@ You also need to make sure you actually have the Windows firewall activated. The
 No, unfortunately not. It uses namespaces which works with the Windows Firewall, and not thirdparty ones (e.g. Kaspersky). 
 So make sure you're only using the Windows one.
 
+Note: I haven't tested it myself, but one person has reported you can disable the third party Firewall while using the program, and then it should work. So if you run into problems, try disabling your third party Firewall, start the program, and when you close the program again, turn on your third party Firewall.
+
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure the programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
 
