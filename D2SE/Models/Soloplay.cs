@@ -85,9 +85,7 @@ namespace D2SoloEnabler
             {
                 if (rule.Name == ruleName)
                 {
-                    Console.WriteLine("Match! {0}", rule.Name);
                     fwPolicy2.Rules.Remove(ruleName);               // If a match is found. Then delete the rule with our supplied name.
-                    Console.WriteLine("{0} deleted.", ruleName);
                 }
             }
         }
