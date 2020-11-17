@@ -108,7 +108,7 @@ namespace D2SoloEnabler
         private void D2SEAbout_Click(object sender, RoutedEventArgs e)
         {
             // For now it just refers the user over to a question of the FAQ
-            System.Diagnostics.Process.Start("https://github.com/DrNoLife/Destiny-2-Solo-Enabler#what-guarantee-do-you-have-this-wont-ban-anyone-source");
+            System.Diagnostics.Process.Start("https://github.com/DrNoLife/Destiny-2-Solo-Enabler#faq");
         }
     }
 }
