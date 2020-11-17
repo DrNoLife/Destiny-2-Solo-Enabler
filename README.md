@@ -12,6 +12,14 @@ For people simply curious as to how the program looks (I'm one of those people, 
 
 ![Image depicting the UI of the Destiny 2 Solo Enabler program.](https://i.imgur.com/b0s1VTP.png)
 
+### What is the "Minimized UI" version?
+It's exactly what the name suggests! The core of the program is the same, but the interface presented to the user is changed. The window itself is smaller, the text and button are smaller, and I completely removed the middle text. 
+This came at the request of u/WrongWayFarer and it was a good idea, so I decided to have two versions of the UI.
+You can see the difference between the two here:
+
+![The difference between the two versions of the program.](https://i.imgur.com/STP92Cr.png)
+
+
 ### How does one use D2SE?
 When you have downloaded the program, you start up Destiny 2. Make sure you're in orbit, then you alt-tab out and enable the program. After doing this, you can search for a strike, forge, or whatever. When you want to turn it off, simply click the button in the program once again.
 
@@ -35,6 +43,12 @@ That is the reason for the prompt asking for admin priviledges. Windows has made
 ### The program does not work! Why?
 Make sure you're giving it admin priviledges. Other than that, make sure you have the .NET Framework installed (should be preinstalled on any newer Windows 10 installation, but if you are having issues, try reinstalling the latest version).
 You also need to make sure you actually have the Windows firewall activated. The program relies on it, therefore it won't function without it.
+
+### Does it work with other Firewalls than the Windows one?
+No, unfortunately not. It uses namespaces which works with the Windows Firewall, and not thirdparty ones (e.g. Kaspersky). 
+So make sure you're only using the Windows one.
+
+Note: I haven't tested it myself, but one person has reported you can disable the third party Firewall while using the program, and then it should work. So if you run into problems, try disabling your third party Firewall, start the program, and when you close the program again, turn on your third party Firewall.
 
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure the programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
