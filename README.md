@@ -78,6 +78,8 @@ Finding out what ports to block was not my doing. On the DestinyTheGame subreddi
 
 In regards to the creation of the firewall rule, [one specific stackoverflow post](https://stackoverflow.com/a/34018032) has my eternal gratitude. This is the combined result of users [David Christiansen](https://stackoverflow.com/users/20406/david-christiansen) and [Heo Đất Hades](https://stackoverflow.com/users/2958737/heo-%c4%90%e1%ba%a5t-hades).
 
+Massive shoutout to Github user [dheif](https://github.com/dheif). He came up with the design for the new UI, and also coded the "About" section of the program. So thank you very much!
+
 ## Ending notes
 This project has been fun so far. Having to start from scratch and search up everything on your own, using whatever resources you might find, having to decide what is actually useful and what's isn't. I know I'll be using this program from now on, and I hope whoever might do the same also has a good experience with it!
 
