@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace D2SoloEnabler
 {
@@ -20,6 +10,15 @@ namespace D2SoloEnabler
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static readonly DependencyProperty IsAboutDisplayedProperty =
+            DependencyProperty.Register("IsAboutDisplayed", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+
+        public bool IsAboutDisplayed
+        {
+            get { return (bool)GetValue(IsAboutDisplayedProperty); }
+            set { SetValue(IsAboutDisplayedProperty, value); }
+        }
+
         // Check if rule is active.
         static string fwRuleName = "Destiny 2 - Solo-Enabler";
         static string portRangeToBlock = "27000-27200,3097";
@@ -31,6 +30,8 @@ namespace D2SoloEnabler
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
 
             // Change values of whatev stuff, dependent on if rule is active or no.
             statusHandling(isActive);
@@ -72,7 +73,8 @@ namespace D2SoloEnabler
                 SoloplayButton.BorderBrush = (Brush)bc.ConvertFrom("#f4d210");
                 SoloplayButton.Background = (Brush)bc.ConvertFrom("#927826");
                 buttonStatus.Foreground = (Brush)bc.ConvertFrom("#ffffff");
-            } else
+            }
+            else
             {
                 SoloplayButton.BorderBrush = (Brush)bc.ConvertFrom("#ffffff");
                 SoloplayButton.Background = (Brush)bc.ConvertFrom("#2a2e32");
@@ -107,8 +109,12 @@ namespace D2SoloEnabler
         // On click of about button
         private void D2SEAbout_Click(object sender, RoutedEventArgs e)
         {
-            // For now it just refers the user over to a question of the FAQ
-            System.Diagnostics.Process.Start("https://github.com/DrNoLife/Destiny-2-Solo-Enabler#faq");
+            IsAboutDisplayed = true;
+        }
+
+        private void OnAboutCloseClicked(object sender, EventArgs e)
+        {
+            IsAboutDisplayed = false;
         }
     }
 }

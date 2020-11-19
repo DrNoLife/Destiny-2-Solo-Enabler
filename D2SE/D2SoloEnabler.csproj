@@ -178,9 +178,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="assets\d2soloenabler_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\github-mark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

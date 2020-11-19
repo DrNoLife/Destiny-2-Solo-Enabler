@@ -1,49 +1,45 @@
-﻿<Page x:Class="D2SoloEnabler.pages.About"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:D2SoloEnabler.pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="About">
-    <!-- Information about this page:
+﻿<UserControl x:Class="D2SoloEnabler.About"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#13171C">
+  <!-- Information about this page:
         Despite having created it and filled it with information etc.
         I don't think I'm going to be using it. I like it the way it is now, that clicking the About button opens up the repository
     -->
-    <!-- Overlay with information -->
-    <Grid Height="220" Width="270" Panel.ZIndex="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
+  <!-- Overlay with information -->
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
 
-        <!-- Title for about -->
-        <Label Content="ABOUT" Grid.Row="1" Grid.Column="1" Foreground="#fff" FontFamily="Roboto Medium" FontSize="14"/>
+    <!-- Title for about -->
+    <DockPanel Grid.Row="0"
+               LastChildFill="True" >
+      <Label DockPanel.Dock="Left" Content="ABOUT" Foreground="#fff" FontFamily="Roboto Medium" FontSize="14"/>
+    </DockPanel>
 
-        <!-- Information -->
-        <TextBlock Padding="5" Foreground="white" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" FontFamily="Roboto Light" LineHeight="18">
+    <!-- Information -->
+    <TextBlock Padding="5" Foreground="white" Grid.Row="1" TextWrapping="Wrap" FontFamily="Roboto Light" LineHeight="18">
                 This program makes use of the Windows firewall. The program is not talking to the game, changing anything in the game, or reading anything from the game.
                 <LineBreak />
                 <LineBreak />
                 Therefore, a ban is extremely unlikely.
-        </TextBlock>
+    </TextBlock>
 
-        <!-- repo name + link -->
-        <Button Grid.Row="3" Grid.Column="1" Width="170" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{DynamicResource AboutButton}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="..\assets\GitHub-Mark-Light-32px.png" Width="auto" Height="24" Margin="0 0 5 0" />
-                <Label Content="Destiny-2-Solo-Enabler" Foreground="#fff" FontFamily="Roboto Medium" FontSize="12"/>
-            </StackPanel>
-        </Button>
-    </Grid>
-</Page>
+    <!-- repo name + link -->
+    <Button Grid.Row="2" ToolTip="Opens FAQ on Github repo" Padding="5" Cursor="Hand" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{DynamicResource AboutButton}" Click="OnButtonRepoClicked" >
+      <DockPanel>
+        <Image Source="..\assets\github-mark.png" Stretch="None" Margin="0 0 5 0" />
+        <TextBlock Text="Destiny-2-Solo-Enabler" Foreground="White" FontFamily="Roboto Medium" FontSize="12"/>
+      </DockPanel>
+    </Button>
+
+
+    <!--About stuff-->
+    <Button Grid.Row="3" Name="D2SEAbout" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" FontSize="11"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Close" Foreground="#8f9193" Margin="0 0 5 -5" Style="{DynamicResource AboutButton}" Click="OnCloseButtonClicked" FontFamily="Roboto Thin"/>
+  </Grid>
+</UserControl>
