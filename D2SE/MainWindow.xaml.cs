@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace D2SoloEnabler
 {
@@ -10,111 +8,107 @@ namespace D2SoloEnabler
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static readonly DependencyProperty IsAboutDisplayedProperty =
-            DependencyProperty.Register("IsAboutDisplayed", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+        static readonly string fwRuleName = "Destiny 2 - Solo-Enabler";
+        static readonly string portRangeToBlock = "27000-27200,3097";
 
+        public static readonly DependencyProperty IsAboutDisplayedProperty =
+            DependencyProperty.Register("IsAboutDisplayed", typeof(bool), typeof(MainWindow),
+            new PropertyMetadata(false));
+        
+        public static readonly DependencyProperty IsSoloPlayActiveProperty =
+            DependencyProperty.Register("IsSoloPlayActive", typeof(bool), typeof(MainWindow),
+            new PropertyMetadata(false, OnPropertyIsSoloPlayActiveChanged));
+
+        /// <summary>
+        /// Indicates if we are initializing the IsSoloPlayActive value or not.
+        /// </summary>
+        private bool _initializing;
+
+        /// <summary>
+        /// Sets whether the about dialog is displayed or not.
+        /// </summary>
         public bool IsAboutDisplayed
         {
             get { return (bool)GetValue(IsAboutDisplayedProperty); }
             set { SetValue(IsAboutDisplayedProperty, value); }
         }
 
-        // Check if rule is active.
-        static string fwRuleName = "Destiny 2 - Solo-Enabler";
-        static string portRangeToBlock = "27000-27200,3097";
-        bool isActive = Soloplay.DoesFWRuleExist(fwRuleName);
-
-        BrushConverter bc = new BrushConverter();
-
+        /// <summary>
+        /// Sets whether the firewall rules exists or not.
+        /// </summary>
+        public bool IsSoloPlayActive
+        {
+            get { return (bool)GetValue(IsSoloPlayActiveProperty); }
+            set { SetValue(IsSoloPlayActiveProperty, value); }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            InitializeResources();
 
             DataContext = this;
-
-            // Change values of whatev stuff, dependent on if rule is active or no.
-            statusHandling(isActive);
+            
+            _initializing = true;
+            IsSoloPlayActive = Soloplay.DoesFWRuleExist(fwRuleName);
+            _initializing = false;
         }
 
-        // On click of big boyo!
-        private void soloplayButton_Click(object sender, RoutedEventArgs e)
+        private void InitializeResources()
         {
-            // If the rule is indeed active. Remove FW rule. Check if still is active. Then do UI changed based on that.
-            if (isActive)
+            // Load project-specific resources
+            var dict = Application.LoadComponent(new Uri("Resources/Resources.xaml", UriKind.Relative)) as ResourceDictionary;
+            if (dict != null)
             {
-                Soloplay.RemoveFirewallRule(fwRuleName);
-                isActive = Soloplay.DoesFWRuleExist(fwRuleName);
-                statusHandling(isActive);
+                Application.Current.Resources.MergedDictionaries.Add(dict);
             }
+        }
 
-            // If the rule is not active. We then add the FW rules. Check if they now exist. Then do UI changed based on that.
-            else
+        private void OnAboutCloseButtonClicked(object sender, EventArgs e)
+        {
+            IsAboutDisplayed = false;
+        }
+
+        private void OnButtonAboutClicked(object sender, RoutedEventArgs e)
+        {
+            IsAboutDisplayed = true;
+        }
+
+        // Well lol, could probably do this some other way. Looks stupid with a method for just this.. but whatever honestly.
+        private void OnButtonCloseClicked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        
+        private static void OnPropertyIsSoloPlayActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MainWindow instance)
+            {
+                instance.OnIsSoloPlayActiveChanged();
+            }
+        }
+
+        private void OnIsSoloPlayActiveChanged()
+        {
+            if(_initializing)
+                return;
+
+            // If the rule is indeed active. Remove FW rule. Check if still is active. Then do UI changed based on that.
+            if (IsSoloPlayActive)
             {
                 // Name. Portrange. Outbound yes/no. UDP yes/no.
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: true, isUDP: true);
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: true, isUDP: false);
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: false, isUDP: true);
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: false, isUDP: false);
-
-                isActive = true;
-                statusHandling(isActive);
             }
-        }
 
-        private void statusHandling(bool isActive)
-        {
-            //currentStatus.Text = isActive ? "Enabled." : "Disabled.";
-            buttonStatus.Content = isActive ? "ON" : "OFF";
-
-            // Change styling dependent of state
-            if (isActive)
-            {
-                SoloplayButton.BorderBrush = (Brush)bc.ConvertFrom("#f4d210");
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#927826");
-                buttonStatus.Foreground = (Brush)bc.ConvertFrom("#ffffff");
-            }
+            // If the rule is not active. We then add the FW rules. Check if they now exist. Then do UI changed based on that.
             else
             {
-                SoloplayButton.BorderBrush = (Brush)bc.ConvertFrom("#ffffff");
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#2a2e32");
-                buttonStatus.Foreground = (Brush)bc.ConvertFrom("#aaabad");
+                Soloplay.RemoveFirewallRule(fwRuleName);
+                IsSoloPlayActive = Soloplay.DoesFWRuleExist(fwRuleName);
             }
-        }
-
-        // Well lol, could probably do this some other way. Looks stupid with a method for just this.. but whatever honestly.
-        private void D2SEShutDown_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void SoloplayButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            // Change hover color, depending on the isActive state
-            if (isActive)
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#8a7224");
-            else
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#31363b");
-        }
-
-        private void SoloplayButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            // Revert back to the normal colors, depending on the isActive state
-            if (isActive)
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#927826");
-            else
-                SoloplayButton.Background = (Brush)bc.ConvertFrom("#2a2e32");
-        }
-
-        // On click of about button
-        private void D2SEAbout_Click(object sender, RoutedEventArgs e)
-        {
-            IsAboutDisplayed = true;
-        }
-
-        private void OnAboutCloseClicked(object sender, EventArgs e)
-        {
-            IsAboutDisplayed = false;
         }
     }
 }
