@@ -79,7 +79,15 @@ namespace D2SoloEnabler
         {
             Application.Current.Shutdown();
         }
-        
+
+        protected override void OnClosed(EventArgs e)
+        {
+            // Remove the FW rules before closing the application.
+            Soloplay.RemoveFirewallRule(fwRuleName);
+
+            base.OnClosed(e);
+        }
+
         private static void OnPropertyIsSoloPlayActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is MainWindow instance)
