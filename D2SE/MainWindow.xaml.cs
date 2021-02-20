@@ -77,6 +77,9 @@ namespace D2SoloEnabler
         // Well lol, could probably do this some other way. Looks stupid with a method for just this.. but whatever honestly.
         private void OnButtonCloseClicked(object sender, RoutedEventArgs e)
         {
+            // Remove the FW rules before closing the application.
+            Soloplay.RemoveFirewallRule(fwRuleName);
+
             Application.Current.Shutdown();
         }
         
