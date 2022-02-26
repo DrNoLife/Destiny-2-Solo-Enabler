@@ -3,8 +3,8 @@ The official repo for the program Destiny 2 Solo Enabler, or shorthand: D2SE.
 Further down the page exists an FAQ, which should hopefully answer any questions you might have. However if you are still left with questions, create an Issue, and I'll respond to you!
 
 ### Notice
-As of 21/11/2021, the program is still working.
-Video proof of that is here: https://www.youtube.com/watch?v=WtCyox2IbQc
+As of 26/02/2022 (the release of the Witch Queen expansion), the program is still working.
+Video proof of that is here: https://youtu.be/L4HJBcH3Z3c
 
 ## FAQ
 
