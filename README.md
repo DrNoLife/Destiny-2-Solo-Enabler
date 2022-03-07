@@ -3,8 +3,11 @@ The official repo for the program Destiny 2 Solo Enabler, or shorthand: D2SE.
 Further down the page exists an FAQ, which should hopefully answer any questions you might have. However if you are still left with questions, create an Issue, and I'll respond to you!
 
 ### Notice
-As of 26/02/2022 (the release of the Witch Queen expansion), the program is still working.
-Video proof of that is here: https://youtu.be/L4HJBcH3Z3c
+Currently, as of 07/03/2022, there are some issues.
+While the program still works, there seems to be an issue where the game sometimes crashes after some time. This time period can be anything from 15 minutes to multiple hours.
+I do not know if it works, but a thing to try would be to disable the program after each run of a strike, and then enable it again for the next strike. Again, I'm not sure if it'd work or not.
+
+But as mentioned, the program does still block people from joining your fireteam, and the reports seems to indicate that it's primarily in Vanguard Ops it crashes.
 
 ## FAQ
 
