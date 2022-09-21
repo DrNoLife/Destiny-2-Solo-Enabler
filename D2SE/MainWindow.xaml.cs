@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace D2SoloEnabler
 {
@@ -14,7 +15,11 @@ namespace D2SoloEnabler
         public static readonly DependencyProperty IsAboutDisplayedProperty =
             DependencyProperty.Register("IsAboutDisplayed", typeof(bool), typeof(MainWindow),
             new PropertyMetadata(false));
-        
+
+        public static readonly DependencyProperty IsSettingsDisplayedProperty =
+            DependencyProperty.Register("IsSettingsDisplayed", typeof(bool), typeof(MainWindow),
+            new PropertyMetadata(false));
+
         public static readonly DependencyProperty IsSoloPlayActiveProperty =
             DependencyProperty.Register("IsSoloPlayActive", typeof(bool), typeof(MainWindow),
             new PropertyMetadata(false, OnPropertyIsSoloPlayActiveChanged));
@@ -31,6 +36,15 @@ namespace D2SoloEnabler
         {
             get { return (bool)GetValue(IsAboutDisplayedProperty); }
             set { SetValue(IsAboutDisplayedProperty, value); }
+        }
+        
+        /// <summary>
+        /// Sets whether the settings dialog is displayed or not.
+        /// </summary>
+        public bool IsSettingsDisplayed 
+        {
+            get => (bool)GetValue(IsSettingsDisplayedProperty); 
+            set => SetValue(IsSettingsDisplayedProperty, value);
         }
 
         /// <summary>
@@ -52,6 +66,9 @@ namespace D2SoloEnabler
             _initializing = true;
             IsSoloPlayActive = Soloplay.DoesFWRuleExist(fwRuleName);
             _initializing = false;
+
+            // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
+            Topmost = true;
         }
 
         private void InitializeResources()
@@ -64,22 +81,41 @@ namespace D2SoloEnabler
             }
         }
 
-        private void OnAboutCloseButtonClicked(object sender, EventArgs e)
-        {
-            IsAboutDisplayed = false;
-        }
+        private void OnAboutCloseButtonClicked(object sender, EventArgs e) => IsAboutDisplayed = false;
 
-        private void OnButtonAboutClicked(object sender, RoutedEventArgs e)
-        {
-            IsAboutDisplayed = true;
-        }
+        private void OnButtonAboutClicked(object sender, RoutedEventArgs e) => IsAboutDisplayed = true;
 
-        // Well lol, could probably do this some other way. Looks stupid with a method for just this.. but whatever honestly.
+        /// <summary>
+        /// Gets called whenever the user clicks on the settings button.
+        /// Displays the settings dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSettingsButtonClicked(object sender, RoutedEventArgs e) => IsSettingsDisplayed = true;
+
+        /// <summary>
+        /// Gets called whenever the user clicks close for the settings dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSettingsDialogClosed(object sender, EventArgs e) => IsSettingsDisplayed = false;
+
+
+        /// <summary>
+        /// Shuts down the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnButtonCloseClicked(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Upon closing the window.
+        /// Remove all firewalls, and raise the close event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
         {
             // Remove the FW rules before closing the application.

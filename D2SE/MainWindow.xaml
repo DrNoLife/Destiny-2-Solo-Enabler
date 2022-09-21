@@ -1,7 +1,7 @@
 ﻿<Window x:Class="D2SoloEnabler.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:D2SoloEnabler"
+        xmlns:local="clr-namespace:D2SoloEnabler" xmlns:pages="clr-namespace:D2SoloEnabler.pages"
         Title="Destiny 2 Solo Enabler" Height="220" Width="270"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -69,9 +69,23 @@
             Click="OnButtonAboutClicked"
             Margin="0,0,10,0"/>
 
-    <!--Embedded About dialog-->
+    <!--About button-->
+    <Button Grid.Row="1"
+            Content="Settings"
+            HorizontalAlignment="Left"
+            Click="OnSettingsButtonClicked"
+            Style="{DynamicResource HyperlinkButton}"
+            Margin="0,0,10,0"
+            Name="SettingsButton" />
+
+        <!--Embedded About dialog-->
     <local:About Grid.RowSpan="2"
                  Visibility="{Binding IsAboutDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
                  Closed="OnAboutCloseButtonClicked"/>
-  </Grid>
+
+     <!--Embedded settings dialog-->       
+    <pages:Settings Grid.RowSpan="2"
+                    Visibility="{Binding IsSettingsDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Closed="OnSettingsDialogClosed" />
+    </Grid>
 </Window> 

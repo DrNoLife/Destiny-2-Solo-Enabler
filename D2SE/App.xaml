@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:D2SoloEnabler"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="/resources/resources.xaml">
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
