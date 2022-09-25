@@ -34,10 +34,8 @@
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
 
-            
-            <CheckBox Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="0">Enable always-on-top</CheckBox>
-            <CheckBox Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="1">Test</CheckBox>
-            <CheckBox Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="2">Test</CheckBox>
+
+            <CheckBox Name="AlwaysOnTop" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="0">Enable always-on-top</CheckBox>
 
         </Grid>
         

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using D2SoloEnabler.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,6 +14,9 @@ namespace D2SoloEnabler.pages
         public Settings()
         {
             InitializeComponent();
+
+            // Initialize the settings with their proper stored value.
+            this.AlwaysOnTop.IsChecked = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
         }
 
         public event EventHandler Closed;
@@ -24,7 +28,11 @@ namespace D2SoloEnabler.pages
 
         private void OnSaveClick(object sender, RoutedEventArgs e)
         {
+            // Optimally we'd have a more procedual way of doing this, but honestly, meh.
+            // Let's just go through the settings one-by-one (which is fine, cuz we've only got one settings... So ye. KISS).
+            SettingsStore.SetSettingValue("AlwaysOnTop", this.AlwaysOnTop.IsChecked.ToString());
 
+            Closed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

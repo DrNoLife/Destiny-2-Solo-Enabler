@@ -1,4 +1,5 @@
-﻿using System;
+﻿using D2SoloEnabler.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -68,7 +69,7 @@ namespace D2SoloEnabler
             _initializing = false;
 
             // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
-            Topmost = true;
+            Topmost = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
         }
 
         private void InitializeResources()
@@ -98,8 +99,13 @@ namespace D2SoloEnabler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnSettingsDialogClosed(object sender, EventArgs e) => IsSettingsDisplayed = false;
+        private void OnSettingsDialogClosed(object sender, EventArgs e)
+        {
+            IsSettingsDisplayed = false;
 
+            // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
+            Topmost = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
+        }
 
         /// <summary>
         /// Shuts down the application.
