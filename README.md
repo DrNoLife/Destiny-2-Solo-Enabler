@@ -80,6 +80,16 @@ This unfortunately also means it won't work on Linux (well, since it requires .N
 ### What's up with the Shimoneta picture?
 It's an amazing series. Can only recommend it to people. A funny show which held my attention through the entire show!
 
+## Troubleshooting
+
+If you keep getting matched with other people you can try these solutions:
+
+- Make absolutely sure you are using no other firewall than the default Windows one. If you have any other installed, disable those.
+- Change the PowerShell execution policy. <br/>https://github.com/DrNoLife/Destiny-2-Solo-Enabler/issues/29#issuecomment-1256405397
+- Check to see if there are any firewall rules which overrule the rules setup by D2SE. <br/>https://github.com/DrNoLife/Destiny-2-Solo-Enabler/issues/29#issuecomment-1236399649
+
+Thanks to BLTplayz and MajorMalarky for the troubleshooting suggestions.
+
 ## Credits
 Finding out what ports to block was not my doing. On the DestinyTheGame subreddit there already exists a PowerShell script which does what my program does. That is from where I got the port range. I would love to be able to just thank the creator of the script, however I can't seem to find out who exactly created it. Many users has posted the same script many times. So let this be a **thank you** to every single person out there posting the script!
 
