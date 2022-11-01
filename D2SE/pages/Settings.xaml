@@ -36,6 +36,8 @@
 
 
             <CheckBox Name="AlwaysOnTop" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="0">Enable always-on-top</CheckBox>
+            
+            <CheckBox Name="EnableHotkey" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="1">Enable hotkey (Alt + Shift + K)</CheckBox>
 
         </Grid>
         

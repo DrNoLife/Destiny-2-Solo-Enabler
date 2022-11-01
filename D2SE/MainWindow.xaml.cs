@@ -1,7 +1,8 @@
 ﻿using D2SoloEnabler.Helpers;
 using System;
 using System.Windows;
-using System.Windows.Controls;
+using mrousavy;
+using System.Windows.Input;
 
 namespace D2SoloEnabler
 {
@@ -57,6 +58,9 @@ namespace D2SoloEnabler
             set { SetValue(IsSoloPlayActiveProperty, value); }
         }
 
+        private bool _enableHotkey = false;
+        private HotKey _soloEnablerHotkey = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -70,6 +74,44 @@ namespace D2SoloEnabler
 
             // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
             Topmost = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
+
+            HandleHotkeyRegistration();
+        }
+
+        private void RemoveHotkey()
+        {
+            if(_soloEnablerHotkey != null)
+            {
+                _soloEnablerHotkey.Dispose();
+                _soloEnablerHotkey = null;
+            }
+        }
+
+        private void HandleHotkeyRegistration()
+        {
+            // Find out if we need to have hotkey functionality.
+            _enableHotkey = Convert.ToBoolean(SettingsStore.GetSettingValue("EnableHotkey"));
+
+            // If user wants to use hotkey, and one hasn't already been set, then create one.
+            if (_enableHotkey && _soloEnablerHotkey == null)
+            {
+                try
+                {
+                    _soloEnablerHotkey = new HotKey((ModifierKeys.Alt | ModifierKeys.Shift), Key.K, this, (hotkey) =>
+                    {
+                        IsSoloPlayActive = !IsSoloPlayActive;
+                    });
+                }
+                catch(Exception)
+                {
+                    // For some reason, the code above always throws an exception saying that "Hotkey already in use."
+                    // Doing this, let's us start the program anyways. Program and hotkey still works, despite hotkey error.
+                }
+            }
+            else
+            {
+                RemoveHotkey();
+            }
         }
 
         private void InitializeResources()
@@ -105,6 +147,7 @@ namespace D2SoloEnabler
 
             // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
             Topmost = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
+            HandleHotkeyRegistration();
         }
 
         /// <summary>
@@ -114,6 +157,7 @@ namespace D2SoloEnabler
         /// <param name="e"></param>
         private void OnButtonCloseClicked(object sender, RoutedEventArgs e)
         {
+            RemoveHotkey();
             Application.Current.Shutdown();
         }
 
@@ -124,6 +168,8 @@ namespace D2SoloEnabler
         /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
         {
+            RemoveHotkey();
+
             // Remove the FW rules before closing the application.
             Soloplay.RemoveFirewallRule(fwRuleName);
 
