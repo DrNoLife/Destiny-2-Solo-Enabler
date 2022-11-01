@@ -74,6 +74,11 @@ namespace D2SoloEnabler
 
             // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
             Topmost = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
 
             HandleHotkeyRegistration();
         }
@@ -104,8 +109,8 @@ namespace D2SoloEnabler
                 }
                 catch(Exception)
                 {
-                    // For some reason, the code above always throws an exception saying that "Hotkey already in use."
-                    // Doing this, let's us start the program anyways. Program and hotkey still works, despite hotkey error.
+                    // This was an issue earlier on development, but it should be fixed now... Buuut I still want to include this, just in case it ain't.
+                    MessageBox.Show("Error initializing the hotkey. Create an issue on Github if this appears.");
                 }
             }
             else
