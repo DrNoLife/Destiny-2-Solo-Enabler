@@ -11,9 +11,9 @@ namespace D2SoloEnabler.Helpers
         {
             string regValue = String.Empty;
 
-            RegistryKey key = Registry.CurrentUser.CreateSubKey($"SOFTWARE\\{_softwareName}");
+            RegistryKey key = Registry.CurrentUser.CreateSubKey($@"SOFTWARE\{_softwareName}");
 
-            if(key != null)
+            if (key != null)
             {
                 regValue = (string)key.GetValue(settingName);
             }
@@ -23,8 +23,17 @@ namespace D2SoloEnabler.Helpers
 
         public static void SetSettingValue(string settingName, string settingValue)
         {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey($"SOFTWARE\\{_softwareName}");
+            RegistryKey key = Registry.CurrentUser.CreateSubKey($@"SOFTWARE\{_softwareName}");
             key.SetValue(settingName, settingValue);
+        }
+
+        public static void DeleteSetting(string settingName)
+        {
+            var subKey = Registry.CurrentUser.OpenSubKey($@"SOFTWARE\{_softwareName}", true);
+            if (subKey != null)
+            {
+                subKey.DeleteValue(settingName);
+            }
         }
     }
 }

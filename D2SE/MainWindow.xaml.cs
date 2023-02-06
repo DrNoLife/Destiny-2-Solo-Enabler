@@ -39,13 +39,13 @@ namespace D2SoloEnabler
             get { return (bool)GetValue(IsAboutDisplayedProperty); }
             set { SetValue(IsAboutDisplayedProperty, value); }
         }
-        
+
         /// <summary>
         /// Sets whether the settings dialog is displayed or not.
         /// </summary>
-        public bool IsSettingsDisplayed 
+        public bool IsSettingsDisplayed
         {
-            get => (bool)GetValue(IsSettingsDisplayedProperty); 
+            get => (bool)GetValue(IsSettingsDisplayedProperty);
             set => SetValue(IsSettingsDisplayedProperty, value);
         }
 
@@ -58,6 +58,14 @@ namespace D2SoloEnabler
             set { SetValue(IsSoloPlayActiveProperty, value); }
         }
 
+        private bool ToggleGameRulesAllowed
+        {
+            get
+            {
+                return Convert.ToBoolean(SettingsStore.GetSettingValue("ToggleGameRules"));
+            }
+        }
+
         private bool _enableHotkey = false;
         private HotKey _soloEnablerHotkey = null;
 
@@ -67,7 +75,7 @@ namespace D2SoloEnabler
             InitializeResources();
 
             DataContext = this;
-            
+
             _initializing = true;
             IsSoloPlayActive = Soloplay.DoesFWRuleExist(fwRuleName);
             _initializing = false;
@@ -85,7 +93,7 @@ namespace D2SoloEnabler
 
         private void RemoveHotkey()
         {
-            if(_soloEnablerHotkey != null)
+            if (_soloEnablerHotkey != null)
             {
                 _soloEnablerHotkey.Dispose();
                 _soloEnablerHotkey = null;
@@ -107,7 +115,7 @@ namespace D2SoloEnabler
                         IsSoloPlayActive = !IsSoloPlayActive;
                     });
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     // This was an issue earlier on development, but it should be fixed now... Buuut I still want to include this, just in case it ain't.
                     MessageBox.Show("Error initializing the hotkey. Create an issue on Github if this appears.");
@@ -163,6 +171,7 @@ namespace D2SoloEnabler
         private void OnButtonCloseClicked(object sender, RoutedEventArgs e)
         {
             RemoveHotkey();
+            SetGameRules();
             Application.Current.Shutdown();
         }
 
@@ -177,6 +186,7 @@ namespace D2SoloEnabler
 
             // Remove the FW rules before closing the application.
             Soloplay.RemoveFirewallRule(fwRuleName);
+            SetGameRules();
 
             base.OnClosed(e);
         }
@@ -191,7 +201,7 @@ namespace D2SoloEnabler
 
         private void OnIsSoloPlayActiveChanged()
         {
-            if(_initializing)
+            if (_initializing)
                 return;
 
             // If the rule is indeed active. Remove FW rule. Check if still is active. Then do UI changed based on that.
@@ -202,13 +212,61 @@ namespace D2SoloEnabler
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: true, isUDP: false);
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: false, isUDP: true);
                 Soloplay.CreateFWRule(ruleName: fwRuleName, portValue: portRangeToBlock, isOut: false, isUDP: false);
+                if (ToggleGameRulesAllowed)
+                {
+                    RemoveGameRules();
+                }
+
             }
 
-            // If the rule is not active. We then add the FW rules. Check if they now exist. Then do UI changed based on that.
+            // If the rule is not active. We then add the FW rules. Check if they now exist and reset the original game rules. Then do UI changed based on that.
             else
             {
                 Soloplay.RemoveFirewallRule(fwRuleName);
+                if (ToggleGameRulesAllowed)
+                {
+                    SetGameRules();
+                }
                 IsSoloPlayActive = Soloplay.DoesFWRuleExist(fwRuleName);
+            }
+        }
+
+        private void SetGameRules()
+        {
+            if (!Soloplay.DoesFWRuleExist("Destiny 2"))
+            {
+                string appLocation = Convert.ToString(SettingsStore.GetSettingValue("ExeLocation"));
+                if (!string.IsNullOrWhiteSpace(appLocation))
+                {
+                    //Creating the TCP rule
+                    Soloplay.CreateFWRule(
+                        ruleName: "Destiny 2",
+                        portValue: "*",
+                        applicationName: appLocation,
+                        isBlocking: false, isOut: false, isUDP: false);
+                    //Creating the UDP Rule
+                    Soloplay.CreateFWRule(
+                        ruleName: "Destiny 2",
+                        portValue: "*",
+                        applicationName: appLocation,
+                        isBlocking: false, isOut: false, isUDP: true);
+                    SettingsStore.DeleteSetting("ExeLocation");
+                }
+            }
+        }
+
+        private void RemoveGameRules()
+        {
+            if (Soloplay.DoesFWRuleExist("Destiny 2"))
+            {
+                if (Soloplay.TryExtractAppNameFromRule("Destiny 2", out string appName))
+                {
+                    if (!string.IsNullOrWhiteSpace(appName))
+                    {
+                        SettingsStore.SetSettingValue("ExeLocation", Convert.ToString(appName));
+                    }
+                    Soloplay.RemoveFirewallRule("Destiny 2");
+                }
             }
         }
     }

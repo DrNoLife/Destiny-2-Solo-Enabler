@@ -18,6 +18,7 @@ namespace D2SoloEnabler.pages
             // Initialize the settings with their proper stored value.
             AlwaysOnTop.IsChecked = Convert.ToBoolean(SettingsStore.GetSettingValue("AlwaysOnTop"));
             EnableHotkey.IsChecked = Convert.ToBoolean(SettingsStore.GetSettingValue("EnableHotkey"));
+            ToggleGameRules.IsChecked = Convert.ToBoolean(SettingsStore.GetSettingValue("ToggleGameRules"));
         }
 
         public event EventHandler Closed;
@@ -33,7 +34,7 @@ namespace D2SoloEnabler.pages
             // Let's just go through the settings one-by-one (which is fine, cuz we've only got one settings... So ye. KISS).
             SettingsStore.SetSettingValue("AlwaysOnTop", AlwaysOnTop.IsChecked.ToString());
             SettingsStore.SetSettingValue("EnableHotkey", EnableHotkey.IsChecked.ToString());
-
+            SettingsStore.SetSettingValue("ToggleGameRules", ToggleGameRules.IsChecked.ToString());
             Closed?.Invoke(this, EventArgs.Empty);
         }
     }
