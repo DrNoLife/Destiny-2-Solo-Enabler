@@ -65,7 +65,7 @@ namespace D2SoloEnabler
         {
             InitializeComponent();
             InitializeResources();
-
+            
             DataContext = this;
             
             _initializing = true;

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32728.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D2SoloEnabler", "D2SoloEnabler.csproj", "{789387BE-15F7-452C-B3AF-D15B57115E18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D2SoloEnabler_Old", "D2SoloEnabler_Old.csproj", "{789387BE-15F7-452C-B3AF-D15B57115E18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Destiny2SoloEnabler", "..\Destiny2SoloEnabler\Destiny2SoloEnabler.csproj", "{BFE38A79-0B76-4890-B5C1-3EEE107F0C06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{789387BE-15F7-452C-B3AF-D15B57115E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{789387BE-15F7-452C-B3AF-D15B57115E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{789387BE-15F7-452C-B3AF-D15B57115E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE38A79-0B76-4890-B5C1-3EEE107F0C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE38A79-0B76-4890-B5C1-3EEE107F0C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE38A79-0B76-4890-B5C1-3EEE107F0C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE38A79-0B76-4890-B5C1-3EEE107F0C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

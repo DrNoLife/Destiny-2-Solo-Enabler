@@ -79,13 +79,13 @@
             Name="SettingsButton" />
 
         <!--Embedded About dialog-->
-    <local:About Grid.RowSpan="2"
+    <!--<local:About Grid.RowSpan="2"
                  Visibility="{Binding IsAboutDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
                  Closed="OnAboutCloseButtonClicked"/>
 
-     <!--Embedded settings dialog-->       
+     --><!--Embedded settings dialog--><!--       
     <pages:Settings Grid.RowSpan="2"
                     Visibility="{Binding IsSettingsDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Closed="OnSettingsDialogClosed" />
+                    Closed="OnSettingsDialogClosed" />-->
     </Grid>
 </Window> 
