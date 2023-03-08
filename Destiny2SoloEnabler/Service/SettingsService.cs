@@ -20,6 +20,12 @@ internal static class SettingsService
         return regValue;
     }
 
+    public static bool GetSettingsBooleanValue(string settingsName)
+    {
+        string value = GetSettingsValue(settingsName);
+        return Convert.ToBoolean(value);
+    }
+
     public static void SetSettingsValue(string settingsName, string settingsValue)
     {
         RegistryKey key = Registry.CurrentUser.CreateSubKey($"SOFTWARE\\{_softwareName}");

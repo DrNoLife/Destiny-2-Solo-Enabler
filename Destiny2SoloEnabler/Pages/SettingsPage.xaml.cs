@@ -1,4 +1,5 @@
-﻿using Destiny2SoloEnabler.Service;
+﻿using Destiny2SoloEnabler.Enums;
+using Destiny2SoloEnabler.Service;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,8 +32,9 @@ public partial class SettingsPage : UserControl
     private void OnSaveClick(object sender, RoutedEventArgs e)
     {
         // Save the settings.
-        SettingsService.SetSettingsValue("AlwaysOnTop", AlwaysOnTop.IsChecked.ToString());
-        SettingsService.SetSettingsValue("EnableHotkey", EnableHotkey.IsChecked.ToString());
+        SettingsService.SetSettingsValue(SettingsNames.AlwaysOnTop.ToString(), AlwaysOnTop.IsChecked.ToString());
+        SettingsService.SetSettingsValue(SettingsNames.EnableHotkey.ToString(), EnableHotkey.IsChecked.ToString());
+        SettingsService.SetSettingsValue(SettingsNames.PersistantRules.ToString(), PersistantRules.IsChecked.ToString());
 
         // When done with saving, close the page.
         CloseAboutPage(sender, e);
@@ -40,7 +42,8 @@ public partial class SettingsPage : UserControl
 
     private void SetSettingsValuesFromStore()
     {
-        AlwaysOnTop.IsChecked = Convert.ToBoolean(SettingsService.GetSettingsValue("AlwaysOnTop"));
-        EnableHotkey.IsChecked = Convert.ToBoolean(SettingsService.GetSettingsValue("EnableHotkey"));
+        AlwaysOnTop.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.AlwaysOnTop.ToString());
+        EnableHotkey.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.EnableHotkey.ToString());
+        PersistantRules.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.PersistantRules.ToString());
     }
 }

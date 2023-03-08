@@ -1,4 +1,5 @@
-﻿using Destiny2SoloEnabler.Models;
+﻿using Destiny2SoloEnabler.Enums;
+using Destiny2SoloEnabler.Models;
 using Destiny2SoloEnabler.Service;
 using mrousavy;
 using System;
@@ -53,6 +54,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeResources();
         DataContext = this;
 
         _firewallRule = new();
@@ -66,6 +68,16 @@ public partial class MainWindow : Window
 
         // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
         Topmost = Convert.ToBoolean(SettingsService.GetSettingsValue("AlwaysOnTop"));
+    }
+
+    private void InitializeResources()
+    {
+        // Load project-specific resources
+        var dict = Application.LoadComponent(new Uri("Resources/StyleDictionary.xaml", UriKind.Relative)) as ResourceDictionary;
+        if (dict != null)
+        {
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
     }
 
     protected override void OnSourceInitialized(EventArgs e)
@@ -141,7 +153,13 @@ public partial class MainWindow : Window
     protected override void OnClosed(EventArgs e)
     {
         RemoveHotkey();
-        SoloPlayService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
+
+        bool deleteRulesUponClosing = !SettingsService.GetSettingsBooleanValue(SettingsNames.PersistantRules.ToString());
+        if (deleteRulesUponClosing)
+        {
+            SoloPlayService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
+        }
+
         base.OnClosed(e);
     }
 

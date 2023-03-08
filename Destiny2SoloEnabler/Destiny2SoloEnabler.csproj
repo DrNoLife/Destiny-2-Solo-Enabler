@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>E:\Repositories\Destiny-2-Solo-Enabler\D2SE\app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\Images\d2soloenabler_icon.ico</ApplicationIcon>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <Content Include="Resources\Images\d2soloenabler_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FirewallManager" Version="1.0.2" />
     <PackageReference Include="GlobalHotkeys" Version="1.0.0.6" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
@@ -25,7 +31,9 @@
   <ItemGroup>
     <Resource Include="Assets\d2soloenabler_icon.ico" />
     <Resource Include="Assets\github-mark.png" />
-    <Resource Include="Resources\Images\d2soloenabler_icon.ico" />
+    <Resource Include="Resources\Images\d2soloenabler_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\github-mark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
