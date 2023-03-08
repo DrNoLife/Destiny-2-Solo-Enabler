@@ -2,12 +2,12 @@
 The official repo for the program Destiny 2 Solo Enabler, or shorthand: D2SE.
 Further down the page exists an FAQ, which should hopefully answer any questions you might have. However if you are still left with questions, create an Issue, and I'll respond to you!
 
-### Notice
-Currently, as of 07/03/2022, there are some issues.
-While the program still works, there seems to be an issue where the game sometimes crashes after some time. This time period can be anything from 15 minutes to multiple hours.
-I do not know if it works, but a thing to try would be to disable the program after each run of a strike, and then enable it again for the next strike. Again, I'm not sure if it'd work or not.
+## Notice
 
-But as mentioned, the program does still block people from joining your fireteam, and the reports seems to indicate that it's primarily in Vanguard Ops it crashes.
+Since the release of lightfall, I personally haven't experienced any crashes yet.
+
+There has been previous reports of crashes happening (particularly from 07/03/2022), where it would crash at almost random intervals. It might still happen, or it might now. Just please be aware, this has something to do with the way Bungie handles things at their end, and it's not something I can fix.
+
 
 ## FAQ
 
@@ -17,8 +17,10 @@ It works on any matchmade activity, i.e. strikes, patrol zones, story missions, 
 
 For people simply curious as to how the program looks (I'm one of those people, wondering about the UI/UX before downloading a program), I've decided to include this image.
 
-![Image depicting the UI of the Destiny 2 Solo Enabler program. Program turned off currently.](https://i.imgur.com/M579sMb.png)
-![Program turned on currently.](https://i.imgur.com/Y9o3DmP.png)
+![Image depicting the UI of the Destiny 2 Solo Enabler program. Program turned off currently.](https://i.imgur.com/JYSgig0.png)
+![Program turned on currently.](https://i.imgur.com/wBUynOe.png)
+![Image showing the settings for the program.](https://i.imgur.com/coVHCQj.png)
+![About section of the program.](https://i.imgur.com/kWID4SF.png)
 
 Note: This is the new design. If you're interessted in the old design, download a release from before v2.
 
