@@ -32,9 +32,10 @@ public partial class SettingsPage : UserControl
     private void OnSaveClick(object sender, RoutedEventArgs e)
     {
         // Save the settings.
-        SettingsService.SetSettingsValue(SettingsNames.AlwaysOnTop.ToString(), AlwaysOnTop.IsChecked.ToString());
-        SettingsService.SetSettingsValue(SettingsNames.EnableHotkey.ToString(), EnableHotkey.IsChecked.ToString());
-        SettingsService.SetSettingsValue(SettingsNames.PersistantRules.ToString(), PersistantRules.IsChecked.ToString());
+        SettingsService.SetSettingsValue(KeyNames.AlwaysOnTop, AlwaysOnTop.IsChecked.ToString());
+        SettingsService.SetSettingsValue(KeyNames.EnableHotkey, EnableHotkey.IsChecked.ToString());
+        SettingsService.SetSettingsValue(KeyNames.PersistantRules, PersistantRules.IsChecked.ToString());
+        SettingsService.SetSettingsValue(KeyNames.ToggleDestiny2Rules, ToggleDestiny2Rules.IsChecked.ToString());
 
         // When done with saving, close the page.
         CloseAboutPage(sender, e);
@@ -42,8 +43,9 @@ public partial class SettingsPage : UserControl
 
     private void SetSettingsValuesFromStore()
     {
-        AlwaysOnTop.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.AlwaysOnTop.ToString());
-        EnableHotkey.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.EnableHotkey.ToString());
-        PersistantRules.IsChecked = SettingsService.GetSettingsBooleanValue(SettingsNames.PersistantRules.ToString());
+        AlwaysOnTop.IsChecked = SettingsService.GetSettingsBooleanValue(KeyNames.AlwaysOnTop);
+        EnableHotkey.IsChecked = SettingsService.GetSettingsBooleanValue(KeyNames.EnableHotkey);
+        PersistantRules.IsChecked = SettingsService.GetSettingsBooleanValue(KeyNames.PersistantRules);
+        ToggleDestiny2Rules.IsChecked = SettingsService.GetSettingsBooleanValue(KeyNames.ToggleDestiny2Rules);
     }
 }

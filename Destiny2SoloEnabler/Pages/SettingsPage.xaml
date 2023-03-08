@@ -27,6 +27,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -39,6 +40,8 @@
             <CheckBox Name="EnableHotkey" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="1">Enable hotkey (Alt + Shift + K)</CheckBox>
 
             <CheckBox Name="PersistantRules" ToolTip="Should firewall rules related to the Destiny 2 Solo-Enabler program persist even when the application is closed? &#x0a;By default, these rules are set to be auto-deleted upon closing the program." Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="2">Persist firewall rules</CheckBox>
+
+            <CheckBox Name="ToggleDestiny2Rules" ToolTip="When 'Destiny 2 Solo-Enabler' is active, this program will remove the firewall rules of Destiny 2. &#x0a;The rules will be added back when 'Destiny 2 Solo-Enabler' is disabled." Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="3">Toggle Destiny 2 rules</CheckBox>
 
         </Grid>
 

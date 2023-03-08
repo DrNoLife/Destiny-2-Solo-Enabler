@@ -1,4 +1,5 @@
 ﻿using Destiny2SoloEnabler.Enums;
+using Destiny2SoloEnabler.Helpers;
 using Destiny2SoloEnabler.Models;
 using Destiny2SoloEnabler.Service;
 using mrousavy;
@@ -42,14 +43,15 @@ public partial class MainWindow : Window
         set => SetValue(IsSoloPlayActiveProperty, value);
     }
 
-    public int Height => Helpers.Constants.Height;
-    public int Width => Helpers.Constants.Width;
+    public int Height => Constants.Height;
+    public int Width => Constants.Width;
 
     // Private fields.
     private bool _initializing;
     private FirewallRule _firewallRule;
     private bool _enableHotkey = false;
     private HotKey _soloEnablerHotkey = null;
+    private bool _toggleDestiny2Rules => SettingsService.GetSettingsBooleanValue(KeyNames.ToggleDestiny2Rules);
 
     public MainWindow()
     {
@@ -58,16 +60,16 @@ public partial class MainWindow : Window
         DataContext = this;
 
         _firewallRule = new();
-        _firewallRule.PortValue = "27000-27200,3097";
-        _firewallRule.RuleName = "Destiny 2 - Solo-Enabler";
+        _firewallRule.PortValue = Constants.PortsToBlock;
+        _firewallRule.RuleName = Constants.D2SEName;
 
         // If user closed the program before deleting the rules, then make sure to reflect that in the view.
         _initializing = true;
-        IsSoloPlayActive = SoloPlayService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
+        IsSoloPlayActive = FirewallService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
         _initializing = false;
 
         // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
-        Topmost = Convert.ToBoolean(SettingsService.GetSettingsValue("AlwaysOnTop"));
+        Topmost = SettingsService.GetSettingsBooleanValue(KeyNames.AlwaysOnTop);
     }
 
     private void InitializeResources()
@@ -85,11 +87,16 @@ public partial class MainWindow : Window
         base.OnSourceInitialized(e);
 
         HandleHotkeyRegistration();
+
+        if (_toggleDestiny2Rules)
+        {
+            RemoveDestiny2Rules();
+        }
     }
 
     private void RemoveHotkey()
     {
-        if (_soloEnablerHotkey != null)
+        if (_soloEnablerHotkey is not null)
         {
             _soloEnablerHotkey.Dispose();
             _soloEnablerHotkey = null;
@@ -99,9 +106,9 @@ public partial class MainWindow : Window
     private void HandleHotkeyRegistration()
     {
         // Find out if we need to have hotkey functionality.
-        _enableHotkey = Convert.ToBoolean(SettingsService.GetSettingsValue("EnableHotkey"));
+        _enableHotkey = SettingsService.GetSettingsBooleanValue(KeyNames.EnableHotkey);
 
-        if(!_enableHotkey || _soloEnablerHotkey is not null)
+        if (!_enableHotkey || _soloEnablerHotkey is not null)
         {
             RemoveHotkey();
             return;
@@ -154,18 +161,21 @@ public partial class MainWindow : Window
     {
         RemoveHotkey();
 
-        bool deleteRulesUponClosing = !SettingsService.GetSettingsBooleanValue(SettingsNames.PersistantRules.ToString());
+        bool deleteRulesUponClosing = !SettingsService.GetSettingsBooleanValue(KeyNames.PersistantRules);
         if (deleteRulesUponClosing)
         {
-            SoloPlayService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
+            FirewallService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
         }
+
+        // When closing the program, quickly add back the original Destiny 2 rules. 
+        SetDestiny2Rules();
 
         base.OnClosed(e);
     }
 
     private static void OnPropertyIsSoloPlayActiveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
     {
-        if(dependencyObject is MainWindow instance)
+        if (dependencyObject is MainWindow instance)
         {
             instance.OnIsSoloPlayActiveChanged();
         }
@@ -173,19 +183,82 @@ public partial class MainWindow : Window
 
     private void OnIsSoloPlayActiveChanged()
     {
-        if(_initializing)
+        if (_initializing)
         {
             return;
         }
 
-        if(IsSoloPlayActive)
+        if (IsSoloPlayActive)
         {
-            SoloPlayService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
-            IsSoloPlayActive = SoloPlayService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
+            // We want the enabler to not be active.
+            FirewallService.Instance().RemoveFirewallRule(_firewallRule.RuleName);
+            IsSoloPlayActive = FirewallService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
+            if (_toggleDestiny2Rules)
+            {
+                SetDestiny2Rules();
+            }
             return;
         }
 
-        SoloPlayService.Instance().CreateFirewallRules(_firewallRule);
-        IsSoloPlayActive = SoloPlayService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
+        // We want the enabler to be active.
+        FirewallService.Instance().CreateFirewallRules(_firewallRule);
+        IsSoloPlayActive = FirewallService.Instance().DoesFirewallRuleExist(_firewallRule.RuleName);
+        if (_toggleDestiny2Rules)
+        {
+            RemoveDestiny2Rules();
+        }
+    }
+
+    private void SetDestiny2Rules()
+    {
+        if(FirewallService.Instance().DoesFirewallRuleExist(Constants.Destiny2Name))
+        {
+            return;
+        }
+
+        string applicationLocation = SettingsService.GetSettingsValue(KeyNames.ApplicationLocation);
+        
+        if(String.IsNullOrEmpty(applicationLocation))
+        {
+            return;
+        }
+
+        // Recreate the original Destiny 2 firewall rule for UDP.
+        FirewallRule destiny2RuleUdp = new()
+        {
+            RuleName = Constants.Destiny2Name,
+            PortValue = "*",
+            ApplicationLocation = applicationLocation,
+            IsBlocking = false,
+            IsOut = false,
+            IsUDP = false
+        };
+        FirewallService.Instance().CreateFirewallRule(destiny2RuleUdp);
+
+        // Recreate the original Destiny 2 firewall rule for TCP.
+        FirewallRule destiny2RuleTcp = destiny2RuleUdp;
+        destiny2RuleTcp.IsUDP = false;
+        FirewallService.Instance().CreateFirewallRule(destiny2RuleTcp);
+    }
+
+    private void RemoveDestiny2Rules()
+    {
+        if(!FirewallService.Instance().DoesFirewallRuleExist(Constants.Destiny2Name))
+        {
+            return;
+        }
+
+        string applicationLocation = FirewallService.Instance().ExtractApplicationNameFromRule(Constants.Destiny2Name);
+
+        if (String.IsNullOrEmpty(applicationLocation))
+        {
+            return;
+        }
+
+        // Store the application location to the keyregistry.
+        SettingsService.SetSettingsValue(KeyNames.ApplicationLocation, applicationLocation);
+
+        // Remove the rules related to Destiny 2.
+        FirewallService.Instance().RemoveFirewallRule(Constants.Destiny2Name);
     }
 }

@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationManifest>E:\Repositories\Destiny-2-Solo-Enabler\D2SE\app.manifest</ApplicationManifest>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Resources\Images\d2soloenabler_icon.ico</ApplicationIcon>
     <SignAssembly>False</SignAssembly>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
