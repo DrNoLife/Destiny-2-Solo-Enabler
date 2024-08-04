@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Destiny2SoloEnabler"
         xmlns:pages="clr-namespace:Destiny2SoloEnabler.Pages"
         mc:Ignorable="d"
-        Title="Ignored for now, we'll come back to you later" Height="220" Width="270"
+        Title="Destiny 2 Solo Enabler" Height="220" Width="270"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
