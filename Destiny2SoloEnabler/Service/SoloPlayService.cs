@@ -12,8 +12,9 @@ internal class SoloPlayService
 
     public SoloPlayService()
     {
-        _firewallPolicyType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
-        _firewallPolicy = (INetFwPolicy2)Activator.CreateInstance(_firewallPolicyType);
+        // Not the best way to handle possible null values... I know.
+        _firewallPolicyType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2")!;
+        _firewallPolicy = (INetFwPolicy2)Activator.CreateInstance(_firewallPolicyType)!;
     }
 
     public static SoloPlayService Instance()
@@ -47,7 +48,7 @@ internal class SoloPlayService
     public void CreateFirewallRule(FirewallRule rule)
     {
         // Create the firewall rule.
-        INetFwRule2 inboundRule = (INetFwRule2)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FWRule"));
+        INetFwRule2 inboundRule = (INetFwRule2)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FWRule")!)!;
 
         // Set the values for the rule.
         inboundRule.Action = rule.Action;

@@ -49,7 +49,7 @@ public partial class MainWindow : Window
     private bool _initializing;
     private FirewallRule _firewallRule;
     private bool _enableHotkey = false;
-    private HotKey _soloEnablerHotkey = null;
+    private HotKey? _soloEnablerHotkey = null;
 
     public MainWindow()
     {
@@ -57,9 +57,11 @@ public partial class MainWindow : Window
         InitializeResources();
         DataContext = this;
 
-        _firewallRule = new();
-        _firewallRule.PortValue = "27000-27200,3097";
-        _firewallRule.RuleName = "Destiny 2 - Solo-Enabler";
+        _firewallRule = new()
+        {
+            PortValue = "27000-27202,3097",
+            RuleName = "Destiny 2 - Solo-Enabler"
+        };
 
         // If user closed the program before deleting the rules, then make sure to reflect that in the view.
         _initializing = true;
