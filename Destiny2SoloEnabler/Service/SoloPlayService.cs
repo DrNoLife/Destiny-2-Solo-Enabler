@@ -31,14 +31,14 @@ internal class SoloPlayService
 
     public void RemoveFirewallRule(string ruleName)
     {
-        if(!DoesFirewallRuleExist(ruleName))
+        if (!DoesFirewallRuleExist(ruleName))
         {
             return;
         }
 
         foreach(INetFwRule rule in _firewallPolicy.Rules)
         {
-            if(rule.Name == ruleName)
+            if (rule.Name == ruleName)
             {
                 _firewallPolicy.Rules.Remove(ruleName);
             }
@@ -66,11 +66,11 @@ internal class SoloPlayService
     public void CreateFirewallRules(FirewallRule rule) 
     {
         // Create a total of 4 rules. Out: true and false. Udp: true and false.
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
         {
-            rule.IsOut = i == 0 ? true : false;
+            rule.IsOut = i == 0;
 
-            for(int j = 0; j < 2; j++)
+            for (int j = 0; j < 2; j++)
             {
                 rule.IsUDP = j == 0 ? true : false;
                 CreateFirewallRule(rule);
