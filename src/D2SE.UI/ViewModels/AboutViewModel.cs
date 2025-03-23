@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using D2SE.UI.Messages;
+using D2SE.Application.Messages;
 using System.Diagnostics;
 
 namespace D2SE.UI.ViewModels;

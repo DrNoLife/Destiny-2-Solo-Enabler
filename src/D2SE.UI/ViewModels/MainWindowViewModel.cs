@@ -5,7 +5,7 @@ using D2SE.Application.Features.Hotkeys.Commands.Initialize;
 using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
 using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
-using D2SE.UI.Messages;
+using D2SE.Application.Messages;
 using MediatR;
 
 namespace D2SE.UI.ViewModels;
@@ -37,6 +37,11 @@ public partial class MainWindowViewModel : ObservableObject
             {
                 IsSettingsDisplayed = false;
             }
+        });
+
+        WeakReferenceMessenger.Default.Register<SoloPlayStatusChangedMessage>(this, (r, message) =>
+        {
+            IsSoloPlayActive = message.IsActive;
         });
     }
 

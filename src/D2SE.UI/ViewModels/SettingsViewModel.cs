@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using D2SE.Application.Features.Settings.Commands.Save;
 using D2SE.Application.Features.Settings.Queries.GetSettings;
 using D2SE.Domain.Entities;
-using D2SE.UI.Messages;
+using D2SE.Application.Messages;
 using MediatR;
 
 namespace D2SE.UI.ViewModels;

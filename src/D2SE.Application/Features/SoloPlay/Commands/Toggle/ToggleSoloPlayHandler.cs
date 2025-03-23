@@ -1,4 +1,6 @@
-﻿using D2SE.Application.Features.SoloPlay.Dtos;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using D2SE.Application.Features.SoloPlay.Dtos;
+using D2SE.Application.Messages;
 using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
 
@@ -20,6 +22,12 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService) : IRequestH
         {
             _firewallService.CreateFirewallRules();
         }
+
+        var message = !rulesActive
+            ? SoloPlayStatusChangedMessage.Active()
+            : SoloPlayStatusChangedMessage.NotActive();
+
+        WeakReferenceMessenger.Default.Send(message);
 
         return Task.FromResult(new SoloPlayStatusDto(!rulesActive));
     }

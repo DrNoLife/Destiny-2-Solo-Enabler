@@ -54,6 +54,7 @@
         <ToggleButton
             Style="{DynamicResource BungieToggleButton}"
             Command="{Binding ToggleSoloPlayCommand}"
+            IsChecked="{Binding IsSoloPlayActive, Mode=TwoWay}"
             Height="69" Width="230" Cursor="Hand">
             <StackPanel>
                 <TextBlock Text="SOLO PLAY" HorizontalAlignment="Center" FontWeight="Light"/>

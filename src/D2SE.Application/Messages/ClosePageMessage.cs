@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace D2SE.UI.Messages;
+namespace D2SE.Application.Messages;
 
 public class ClosePageMessage(string PageName) : ValueChangedMessage<string>(PageName)
 {
