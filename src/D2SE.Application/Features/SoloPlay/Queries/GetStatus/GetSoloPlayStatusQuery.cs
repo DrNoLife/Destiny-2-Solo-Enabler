@@ -3,4 +3,4 @@ using MediatR;
 
 namespace D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 
-public record GetStatusQuery() : IRequest<SoloPlayStatusDto>;
+public record GetSoloPlayStatusQuery() : IRequest<SoloPlayStatusDto>;

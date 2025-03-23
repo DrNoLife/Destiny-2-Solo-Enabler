@@ -1,16 +1,17 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
 using D2SE.Application.Features.SoloPlay.Dtos;
-using D2SE.Application.Messages;
+using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
 
 namespace D2SE.Application.Features.SoloPlay.Commands.Toggle;
 
-public class ToggleSoloPlayHandler(IFirewallService firewallService) : IRequestHandler<ToggleSoloPlayCommand, SoloPlayStatusDto>
+public class ToggleSoloPlayHandler(IFirewallService firewallService, ISender mediator) : IRequestHandler<ToggleSoloPlayCommand>
 {
     private readonly IFirewallService _firewallService = firewallService;
+    private readonly ISender _mediator = mediator;
 
-    public Task<SoloPlayStatusDto> Handle(ToggleSoloPlayCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ToggleSoloPlayCommand request, CancellationToken cancellationToken)
     {
         var rulesActive = _firewallService.FirewallRulesExists();
 
@@ -23,12 +24,8 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService) : IRequestH
             _firewallService.CreateFirewallRules();
         }
 
-        var message = !rulesActive
-            ? SoloPlayStatusChangedMessage.Active()
-            : SoloPlayStatusChangedMessage.NotActive();
+        await _mediator.Send(new BroadcastSoloPlayStatusCommand(!rulesActive), cancellationToken);
 
-        WeakReferenceMessenger.Default.Send(message);
-
-        return Task.FromResult(new SoloPlayStatusDto(!rulesActive));
+        //return await _mediator.Send(new GetSoloPlayStatusQuery(), cancellationToken);
     }
 }

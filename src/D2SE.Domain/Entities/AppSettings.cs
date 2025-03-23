@@ -3,8 +3,9 @@
 public record AppSettings(
     bool AlwaysOnTop,
     bool EnableHotkey,
-    bool PersistentRules)
+    bool PersistentRules,
+    bool InvertFunctionality)
 {
     public static AppSettings CreateDefaultSettings()
-        => new(false, false, false);
+        => new(false, false, false, false);
 };

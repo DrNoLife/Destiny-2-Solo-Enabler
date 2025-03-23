@@ -6,6 +6,9 @@ using D2SE.Application.Features.Settings.Queries.GetSettings;
 using D2SE.Domain.Entities;
 using D2SE.Application.Messages;
 using MediatR;
+using D2SE.Application.Features.SoloPlay.Dtos;
+using D2SE.Application.Features.SoloPlay.Commands.Toggle;
+using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 
 namespace D2SE.UI.ViewModels;
 
@@ -18,7 +21,6 @@ public partial class SettingsViewModel(ISender mediatr) : ObservableObject
 
     public async Task InitializeAsync()
     {
-        // Load the current settings via a CQRS query.
         Settings = await _mediatr.Send(new GetSettingsQuery());
     }
 
@@ -28,6 +30,9 @@ public partial class SettingsViewModel(ISender mediatr) : ObservableObject
         await _mediatr.Send(new SaveSettingsCommand(Settings));
 
         System.Windows.Application.Current.MainWindow.Topmost = Settings.AlwaysOnTop;
+
+        // Get the status of the program, which forces the frontend UI to update if the invert functionality has changed.
+        _ = await _mediatr.Send(new GetSoloPlayStatusQuery());
 
         SendCloseRequest();
     }

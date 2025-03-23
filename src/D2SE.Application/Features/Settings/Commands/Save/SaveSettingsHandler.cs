@@ -18,6 +18,7 @@ public class SaveSettingsHandler(ISettingsService settingsService, ISender media
             _settingsService.SetSettingsValue(SettingsNames.AlwaysOnTop.ToString(), request.Settings.AlwaysOnTop.ToString());
             _settingsService.SetSettingsValue(SettingsNames.EnableHotkey.ToString(), request.Settings.EnableHotkey.ToString());
             _settingsService.SetSettingsValue(SettingsNames.PersistentRules.ToString(), request.Settings.PersistentRules.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.InvertFunctionality.ToString(), request.Settings.InvertFunctionality.ToString());
 
             await HandleHotkeyRegistration(request, cancellationToken);
 

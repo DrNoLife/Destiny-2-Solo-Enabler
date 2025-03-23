@@ -47,9 +47,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        // Get current status of solo play.
-        GetStatusQuery soloPlayStatus = new();
-        IsSoloPlayActive = (await _mediatr.Send(soloPlayStatus)).SoloPlayIsActive;
+        _ = await _mediatr.Send(new GetSoloPlayStatusQuery());
 
         // Check if program should be on top.
         GetSettingsValueQuery query = new("AlwaysOnTop");
@@ -80,8 +78,6 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     public async Task ToggleSoloPlay()
     {
-        ToggleSoloPlayCommand command = new();
-        var soloPlayStatus = await _mediatr.Send(command);
-        IsSoloPlayActive = soloPlayStatus.SoloPlayIsActive;
+         await _mediatr.Send(new ToggleSoloPlayCommand());
     }
 }

@@ -4,5 +4,6 @@ public enum SettingsNames
 {
     AlwaysOnTop,
     EnableHotkey,
-    PersistentRules
+    PersistentRules,
+    InvertFunctionality
 }

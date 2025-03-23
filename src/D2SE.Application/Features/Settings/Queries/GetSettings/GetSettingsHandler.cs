@@ -14,7 +14,8 @@ public class GetSettingsHandler(ISettingsService settingsService) : IRequestHand
         AppSettings settings = new(
             _settingsService.GetSettingsValue(SettingsNames.AlwaysOnTop.ToString()),
             _settingsService.GetSettingsValue(SettingsNames.EnableHotkey.ToString()),
-            _settingsService.GetSettingsValue(SettingsNames.PersistentRules.ToString()));
+            _settingsService.GetSettingsValue(SettingsNames.PersistentRules.ToString()),
+            _settingsService.GetSettingsValue(SettingsNames.InvertFunctionality.ToString()));
 
         return Task.FromResult(settings);
     }
