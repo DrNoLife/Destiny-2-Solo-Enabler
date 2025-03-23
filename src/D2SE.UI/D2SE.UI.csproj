@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Resources\Images\d2soloenabler_icon.ico</ApplicationIcon>
+    <AssemblyName>Destiny 2 Solo-Enabler</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
