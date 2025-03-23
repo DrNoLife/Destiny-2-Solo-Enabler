@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FirewallManager" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>

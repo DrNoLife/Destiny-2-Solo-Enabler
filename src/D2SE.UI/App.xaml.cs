@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using D2SE.Application.Extensions;
-using D2SE.Domain.Interfaces.Infrastructure;
-using D2SE.Infrastructure.Services;
+using D2SE.Infrastructure.Extensions;
 using D2SE.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,10 +15,8 @@ public partial class App : System.Windows.Application
     {
         ServiceCollection services = new ();
 
-        services.AddSingleton<ISettingsService, SettingsService>();
-        services.AddSingleton<IFirewallService, FirewallService>();
-
         services.AddApplicationServices();
+        services.AddInfrastructureServices();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<SettingsViewModel>();
