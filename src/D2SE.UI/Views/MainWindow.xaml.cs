@@ -19,6 +19,8 @@ public partial class MainWindow : Window
         DataContext = vm;
         Loaded += async (s, e) 
             => await vm!.InitializeAsync();
+        Closing += async (s, e)
+            => await vm!.CloseApplicationCommand.ExecuteAsync(null);
     }
 
     private static void InitializeResources()
