@@ -109,6 +109,12 @@ If you keep getting matched with other people you can try these solutions:
 
 Thanks to BLTplayz and MajorMalarky for the troubleshooting suggestions.
 
+## Command Line Arguments
+
+Since release 4.0 (complete rewrite of the program) one can use command line arguments. For now, one only is supported.
+
+* ```-PortRange``` specifies what ports should be blocked.
+
 
 
 ## Credits & Acknowledgments
