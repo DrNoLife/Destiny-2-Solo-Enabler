@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using D2SE.Application.Features.Hotkeys.Commands.Initialize;
 using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
 using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
@@ -50,7 +51,13 @@ public partial class MainWindowViewModel : ObservableObject
         bool shouldBeTopmost = await _mediatr.Send(query);
         System.Windows.Application.Current.MainWindow.Topmost = shouldBeTopmost;
 
-        HandleHotkeyRegistration();
+        await HandleHotkeyRegistration();
+    }
+
+    private async Task HandleHotkeyRegistration()
+    {
+        InitializeHotkeysCommand command = new();
+        await _mediatr.Send(command);
     }
 
     [RelayCommand]
@@ -72,10 +79,4 @@ public partial class MainWindowViewModel : ObservableObject
         var soloPlayStatus = await _mediatr.Send(command);
         IsSoloPlayActive = soloPlayStatus.SoloPlayIsActive;
     }
-
-    private void HandleHotkeyRegistration()
-    {
-        Console.WriteLine("Should register hotkeys in the future...");
-    }
-
 }

@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<IFirewallService, FirewallService>();
+        services.AddSingleton<IHotkeyService, HotkeyService>();
 
         return services;
     }
