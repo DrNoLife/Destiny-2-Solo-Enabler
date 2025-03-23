@@ -16,5 +16,7 @@ public partial class SettingsPage : UserControl
         var vm = Ioc.Default.GetService<SettingsViewModel>();
 
         DataContext = vm;
+        Loaded += async (s, e)
+            => await vm!.InitializeAsync();
     }
 }

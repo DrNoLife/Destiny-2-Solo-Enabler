@@ -53,7 +53,7 @@
         <!-- Giant enable / disable button -->
         <ToggleButton
             Style="{DynamicResource BungieToggleButton}"
-            IsChecked="{Binding IsSoloPlayActive, Mode=TwoWay}"
+            Command="{Binding ToggleSoloPlayCommand}"
             Height="69" Width="230" Cursor="Hand">
             <StackPanel>
                 <TextBlock Text="SOLO PLAY" HorizontalAlignment="Center" FontWeight="Light"/>

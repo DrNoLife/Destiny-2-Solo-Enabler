@@ -40,7 +40,6 @@
             Command="{Binding OpenGitHubRepositoryCommand}">
             <DockPanel>
                 <Image 
-                    
                     Source="pack://application:,,,/Resources/Images/github-mark.png"
                     Stretch="None" 
                     Margin="0,0,5,0" />

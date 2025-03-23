@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
+using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.UI.Messages;
 using MediatR;
@@ -45,7 +46,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsSoloPlayActive = (await _mediatr.Send(soloPlayStatus)).SoloPlayIsActive;
 
         // Check if program should be on top.
-        GetSettingsQuery query = new("AlwaysOnTop");
+        GetSettingsValueQuery query = new("AlwaysOnTop");
         bool shouldBeTopmost = await _mediatr.Send(query);
         System.Windows.Application.Current.MainWindow.Topmost = shouldBeTopmost;
 
@@ -62,6 +63,14 @@ public partial class MainWindowViewModel : ObservableObject
     private static void CloseApplication()
     {
         System.Windows.Application.Current.Shutdown();
+    }
+
+    [RelayCommand]
+    public async Task ToggleSoloPlay()
+    {
+        ToggleSoloPlayCommand command = new();
+        var soloPlayStatus = await _mediatr.Send(command);
+        IsSoloPlayActive = soloPlayStatus.SoloPlayIsActive;
     }
 
     private void HandleHotkeyRegistration()

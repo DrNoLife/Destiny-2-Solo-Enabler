@@ -2,4 +2,4 @@
 
 namespace D2SE.Application.Features.Settings.Queries.GetSettingsValue;
 
-public record GetSettingsQuery(string SettingsName) : IRequest<bool>;
+public record GetSettingsValueQuery(string SettingsName) : IRequest<bool>;

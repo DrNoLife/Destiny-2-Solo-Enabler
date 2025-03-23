@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <None Remove="Resources\Images\d2soloenabler_icon.ico" />
+    <None Remove="Resources\Images\github-mark.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,15 @@
     <ProjectReference Include="..\D2SE.Application\D2SE.Application.csproj" />
     <ProjectReference Include="..\D2SE.Domain\D2SE.Domain.csproj" />
     <ProjectReference Include="..\D2SE.Infrastructure\D2SE.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\d2soloenabler_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\github-mark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

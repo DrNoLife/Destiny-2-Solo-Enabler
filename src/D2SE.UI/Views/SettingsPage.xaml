@@ -38,11 +38,24 @@
             </Grid.ColumnDefinitions>
 
 
-            <CheckBox Name="AlwaysOnTop" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="0">Enable always-on-top</CheckBox>
+        <CheckBox Content="Enable always-on-top" 
+            Margin="0 5 0 5"
+            Foreground="White"
+            Grid.Column="0" Grid.Row="0"
+            IsChecked="{Binding Settings.AlwaysOnTop, Mode=TwoWay}" />
 
-            <CheckBox Name="EnableHotkey" Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="1">Enable hotkey (Alt + Shift + K)</CheckBox>
+        <CheckBox Content="Enable hotkey (Alt + Shift + K)" 
+            Margin="0 5 0 5"
+            Foreground="White"
+            Grid.Column="0" Grid.Row="1"
+            IsChecked="{Binding Settings.EnableHotkey, Mode=TwoWay}" />
 
-            <CheckBox Name="PersistantRules" ToolTip="Should firewall rules related to the Destiny 2 Solo-Enabler program persist even when the application is closed? &#x0a;By default, these rules are set to be auto-deleted upon closing the program." Margin="0 5 0 5" Foreground="White" Grid.Column="0" Grid.Row="2">Persist firewall rules</CheckBox>
+        <CheckBox Content="Persist firewall rules" 
+            ToolTip="Should firewall rules related to the Destiny 2 Solo-Enabler program persist even when the application is closed? &#x0a;By default, these rules are set to be auto-deleted upon closing the program."
+            Margin="0 5 0 5"
+            Foreground="White"
+            Grid.Column="0" Grid.Row="2"
+            IsChecked="{Binding Settings.PersistentRules, Mode=TwoWay}" />
 
         </Grid>
 

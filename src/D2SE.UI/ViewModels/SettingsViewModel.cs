@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
+using D2SE.Application.Features.Settings.Commands.Save;
+using D2SE.Application.Features.Settings.Queries.GetSettings;
+using D2SE.Domain.Entities;
 using D2SE.UI.Messages;
 using MediatR;
 
@@ -11,22 +13,27 @@ public partial class SettingsViewModel(ISender mediatr) : ObservableObject
 {
     private readonly ISender _mediatr = mediatr;
 
+    [ObservableProperty]
+    private AppSettings _settings = AppSettings.CreateDefaultSettings();
+
+    public async Task InitializeAsync()
+    {
+        // Load the current settings via a CQRS query.
+        Settings = await _mediatr.Send(new GetSettingsQuery());
+    }
+
     [RelayCommand]
     public async Task CloseAndSaveAsync()
     {
-        // Save settings via MediatR or your settings service
-        GetSettingsQuery query = new("AlwaysOnTop");
-        bool shouldBeTopmost = await _mediatr.Send(query);
-        System.Windows.Application.Current.MainWindow.Topmost = shouldBeTopmost;
+        await _mediatr.Send(new SaveSettingsCommand(Settings));
 
-        // Register or update hotkeys if necessary
-        // ...
+        System.Windows.Application.Current.MainWindow.Topmost = Settings.AlwaysOnTop;
 
         SendCloseRequest();
     }
 
     [RelayCommand]
-    public void CloseWithoutSaving()
+    public static void CloseWithoutSaving()
         => SendCloseRequest();
 
     private static void SendCloseRequest()
