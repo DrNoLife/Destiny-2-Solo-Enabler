@@ -1,4 +1,6 @@
 ﻿using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
+using D2SE.Domain.Constants;
+using D2SE.Domain.Entities;
 using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
 using System.Diagnostics;
@@ -23,7 +25,18 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService, ISender med
         }
         else
         {
-            _firewallService.CreateFirewallRules();
+            FirewallRule ruleEntity = FirewallRule.CreateRule();
+
+            var commandLineArgs = Environment.GetCommandLineArgs().ToList();
+            var portRangeIndex = commandLineArgs.IndexOf("-PortRange");
+
+            if (portRangeIndex != -1)
+            {
+                var portRange = commandLineArgs[portRangeIndex + 1];
+                ruleEntity = ruleEntity with { PortValue = portRange };
+            }
+
+            _firewallService.CreateFirewallRules(ruleEntity);
             Debug.WriteLine("Want to add rules");
         }
 

@@ -45,10 +45,8 @@ public class FirewallService : IFirewallService
         _firewallPolicy.Rules.Add(inboundRule);
     }
 
-    public void CreateFirewallRules()
+    public void CreateFirewallRules(FirewallRule ruleEntity)
     {
-        FirewallRule ruleEntity = FirewallRule.CreateRule();
-
         // Create a total of 4 rules.
         // Out: true and false.
         // Udp: true and false.
