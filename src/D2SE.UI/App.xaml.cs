@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using D2SE.Application.Extensions;
 using D2SE.Infrastructure.Extensions;
+using D2SE.UI.Features.Notifications;
 using D2SE.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,9 @@ public partial class App : System.Windows.Application
 
         services.AddApplicationServices();
         services.AddInfrastructureServices();
+
+        services.AddMediatR(cfg
+            => cfg.RegisterServicesFromAssemblies(typeof(AlertNotificationHandler).Assembly));
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<SettingsViewModel>();

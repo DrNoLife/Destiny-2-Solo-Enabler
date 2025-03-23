@@ -4,9 +4,9 @@ using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 
 namespace D2SE.Application.Features.Hotkeys.Commands.Pressed;
 
-public class HotkeyPressedHandler(ISender mediatr) : IRequestHandler<HotkeyPressedCommand>
+public class HotkeyPressedHandler(IMediator mediator) : IRequestHandler<HotkeyPressedCommand>
 {
-    private readonly ISender _mediatr = mediatr;
+    private readonly IMediator _mediator = mediator;
 
     public async Task Handle(HotkeyPressedCommand request, CancellationToken cancellationToken)
     {
@@ -15,6 +15,6 @@ public class HotkeyPressedHandler(ISender mediatr) : IRequestHandler<HotkeyPress
             throw new Exception("Unknown hotkey");
         }
 
-        await _mediatr.Send(new ToggleSoloPlayCommand(), cancellationToken);
+        await _mediator.Send(new ToggleSoloPlayCommand(), cancellationToken);
     }
 }
