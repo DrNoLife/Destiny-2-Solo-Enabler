@@ -23,11 +23,11 @@ public class GetSoloPlayStatusHandler(IFirewallService firewallService, ISender 
             rulesActive = !rulesActive;
         }
 
-        var command = rulesActive
-            ? BroadcastSoloPlayStatusCommand.Activated()
-            : BroadcastSoloPlayStatusCommand.Deactivated();
+        //var command = rulesActive
+        //    ? BroadcastSoloPlayStatusCommand.Activated()
+        //    : BroadcastSoloPlayStatusCommand.Deactivated();
 
-        await _mediator.Send(command, cancellationToken);
+        //await _mediator.Send(command, cancellationToken);
 
         return new SoloPlayStatusDto(rulesActive);
     }

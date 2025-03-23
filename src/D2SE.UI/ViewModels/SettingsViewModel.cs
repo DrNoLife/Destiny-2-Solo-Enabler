@@ -9,6 +9,7 @@ using MediatR;
 using D2SE.Application.Features.SoloPlay.Dtos;
 using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
+using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
 
 namespace D2SE.UI.ViewModels;
 
@@ -31,8 +32,7 @@ public partial class SettingsViewModel(ISender mediatr) : ObservableObject
 
         System.Windows.Application.Current.MainWindow.Topmost = Settings.AlwaysOnTop;
 
-        // Get the status of the program, which forces the frontend UI to update if the invert functionality has changed.
-        _ = await _mediatr.Send(new GetSoloPlayStatusQuery());
+        await _mediatr.Send(new BroadcastSoloPlayStatusCommand());
 
         SendCloseRequest();
     }

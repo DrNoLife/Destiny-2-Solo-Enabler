@@ -3,9 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using D2SE.Application.Features.Hotkeys.Commands.Initialize;
 using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
+using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
+using D2SE.Application.Features.SoloPlay.Commands.Disable;
 using D2SE.Application.Features.SoloPlay.Commands.Toggle;
 using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.Application.Messages;
+using D2SE.Domain.Enums;
 using MediatR;
 
 namespace D2SE.UI.ViewModels;
@@ -47,7 +50,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        _ = await _mediatr.Send(new GetSoloPlayStatusQuery());
+        await _mediatr.Send(new BroadcastSoloPlayStatusCommand());
 
         // Check if program should be on top.
         GetSettingsValueQuery query = new("AlwaysOnTop");
@@ -70,8 +73,15 @@ public partial class MainWindowViewModel : ObservableObject
     private void ShowSettings() => IsSettingsDisplayed = true;
 
     [RelayCommand]
-    private static void CloseApplication()
+    private async Task CloseApplication()
     {
+        var shouldPersistRules = await _mediatr.Send(GetSettingsValueQuery.FromSetting(SettingsNames.PersistentRules));
+
+        if (!shouldPersistRules)
+        {
+            await _mediatr.Send(new DisableSoloPlayCommand());
+        }
+
         System.Windows.Application.Current.Shutdown();
     }
 

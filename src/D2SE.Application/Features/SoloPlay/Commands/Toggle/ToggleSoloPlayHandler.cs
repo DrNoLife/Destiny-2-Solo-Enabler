@@ -1,8 +1,7 @@
 ﻿using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
-using D2SE.Application.Features.SoloPlay.Dtos;
-using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
+using System.Diagnostics;
 
 namespace D2SE.Application.Features.SoloPlay.Commands.Toggle;
 
@@ -15,17 +14,20 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService, ISender med
     {
         var rulesActive = _firewallService.FirewallRulesExists();
 
+        Debug.WriteLine($"Rules currently active: {rulesActive}");
+
         if (rulesActive)
         {
             _firewallService.RemoveFirewallRules();
+            Debug.WriteLine("Want to remove rules");
         }
         else
         {
             _firewallService.CreateFirewallRules();
+            Debug.WriteLine("Want to add rules");
         }
 
-        await _mediator.Send(new BroadcastSoloPlayStatusCommand(!rulesActive), cancellationToken);
 
-        //return await _mediator.Send(new GetSoloPlayStatusQuery(), cancellationToken);
+        await _mediator.Send(new BroadcastSoloPlayStatusCommand(), cancellationToken);
     }
 }
