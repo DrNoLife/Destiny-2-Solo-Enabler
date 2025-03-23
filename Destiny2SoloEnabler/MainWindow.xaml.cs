@@ -69,7 +69,7 @@ public partial class MainWindow : Window
         _initializing = false;
 
         // Makes sure the application has the highest z-index of all applications, thus doing the always-on-top.
-        Topmost = Convert.ToBoolean(SettingsService.GetSettingsValue("AlwaysOnTop"));
+        Topmost = SettingsService.GetSettingsBooleanValue("AlwaysOnTop");
     }
 
     private void InitializeResources()
@@ -91,7 +91,7 @@ public partial class MainWindow : Window
 
     private void RemoveHotkey()
     {
-        if (_soloEnablerHotkey != null)
+        if (_soloEnablerHotkey is not null)
         {
             _soloEnablerHotkey.Dispose();
             _soloEnablerHotkey = null;
@@ -101,7 +101,7 @@ public partial class MainWindow : Window
     private void HandleHotkeyRegistration()
     {
         // Find out if we need to have hotkey functionality.
-        _enableHotkey = Convert.ToBoolean(SettingsService.GetSettingsValue("EnableHotkey"));
+        _enableHotkey = SettingsService.GetSettingsBooleanValue("EnableHotkey");
 
         if(!_enableHotkey || _soloEnablerHotkey is not null)
         {

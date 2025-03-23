@@ -23,6 +23,12 @@ internal static class SettingsService
     public static bool GetSettingsBooleanValue(string settingsName)
     {
         string value = GetSettingsValue(settingsName);
+
+        if (String.IsNullOrEmpty(value))
+        {
+            value = "false";
+        }
+
         return Convert.ToBoolean(value);
     }
 
