@@ -1,0 +1,101 @@
+﻿<Window x:Class="Destiny2SoloEnabler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Destiny2SoloEnabler"
+        xmlns:pages="clr-namespace:Destiny2SoloEnabler.Pages"
+        mc:Ignorable="d"
+        Title="Destiny 2 Solo Enabler" Height="220" Width="270"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        TextBlock.Foreground="White"
+        TextBlock.FontFamily="Roboto"
+        Background="#14171c">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" />
+    </WindowChrome.WindowChrome>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Top window panel -->
+        <DockPanel VerticalAlignment="Top"  Background="Transparent">
+            <Button 
+                DockPanel.Dock="Right"
+                Content="X"
+                Style="{DynamicResource HyperlinkButton}"
+                HorizontalAlignment="Right" VerticalAlignment="Center"
+                FontSize="16"
+                WindowChrome.IsHitTestVisibleInChrome="True"
+                Click="OnButtonCloseClicked"/>
+
+            <TextBlock 
+                Text="Destiny 2 Solo Enabler"
+                FontFamily="Roboto Light"
+                VerticalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- Giant enable / disable button -->
+        <ToggleButton Style="{DynamicResource BungieToggleButton}"
+                  IsChecked="{Binding IsSoloPlayActive}"
+                  Height="69" Cursor="Hand" Width="230">
+            <StackPanel>
+                <TextBlock Text="SOLO PLAY" HorizontalAlignment="Center" FontWeight="Light"/>
+                <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,5,0,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="OFF"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSoloPlayActive}" Value="True">
+                                    <Setter Property="Text" Value="ON"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </ToggleButton>
+
+        <!-- About button -->
+        <Button 
+            Grid.Row="1"
+            Content="About"
+            Style="{DynamicResource HyperlinkButton}"
+            HorizontalAlignment="Right"
+            Margin="0,0,10,0"
+            Click="OnButtonAboutClicked"/>
+
+        <!-- Settings button -->
+        <Button 
+            Grid.Row="1"
+            Content="Settings"
+            HorizontalAlignment="Left"
+            Style="{DynamicResource HyperlinkButton}"
+            Margin="0,0,10,0"
+            Name="SettingsButton"
+            Click="OnButtonSettingsClicked"/>
+
+        <!-- Embedded About dialog -->
+        <pages:AboutPage 
+            Grid.RowSpan="2"
+            Visibility="{Binding IsAboutDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
+            OnClose="OnAboutCloseButtonClicked"/>
+        
+        <!-- Embedded settings dialog -->
+        <pages:SettingsPage
+            Grid.RowSpan="2"
+            Visibility="{Binding IsSettingsDisplayed, Converter={StaticResource BooleanToVisibilityConverter}}"
+            OnClose="OnSettingsCloseButtonClicked"/>
+    </Grid>
+</Window>

@@ -1,8 +1,6 @@
 # Destiny 2 Solo Enabler
 Destiny 2 Solo Enabler is a lightweight tool designed to help players load into Destiny 2 sessions without being matched with other players. By managing Windows Firewall rules, the program effectively blocks matchmaking ports, enabling solo play for strikes, forges, story missions, and more.
 
-![Total Downloads](https://img.shields.io/github/downloads/DrNoLife/Destiny-2-Solo-Enabler/total?style=social) ![Last Commit](https://img.shields.io/github/last-commit/DrNoLife/Destiny-2-Solo-enabler/master)
-
 ## Features
 
 * **Matchmaking Block:**
@@ -38,21 +36,10 @@ For people simply curious as to how the program looks (I'm one of those people, 
 ![Image showing the settings for the program.](https://i.imgur.com/coVHCQj.png)
 ![About section of the program.](https://i.imgur.com/kWID4SF.png)
 
-## FAQ
-
-### What is D2SE?
-D2SE is a program which creates Firewall rules and blocks out ports used by Destiny 2 (or well, rather Steam itself) for matchmaking. This enables the user of the program to load into an empty strike or an empty forge. Basically, it allows the user to not be matchmade with other players.
-It works on any matchmade activity, i.e. strikes, patrol zones, story missions, etc...
+Note: This is the new design. If you're interessted in the old design, download a release from before v2.
 
 ### How does one use D2SE?
-
-* Download and start the program.
-* Boot up Destiny 2 and go into orbit.
-* Enable the program.
-* Start matchmaking.
-* ... after some time (like 30 - 60 seconds) matchmaking will fail, and you will get an instance for yourself.
-
-When you want to turn it off, simply click the button in the program once again.
+When you have downloaded the program, you start up Destiny 2. Make sure you're in orbit, then you alt-tab out and enable the program. After doing this, you can search for a strike, forge, or whatever. When you want to turn it off, simply click the button in the program once again.
 
 ### Why did I create D2SE?
 It's a program I decided to develop, because I got more and more annoyed with Bungie's decisions to focus on Bounties which made players compete with each other in Strikes.
@@ -60,16 +47,20 @@ I don't want to fight for kills against teammates just to complete a bounty, I w
 
 While there already are scripts to solve this issue, the problem with them is the lack of UX. For this program I wanted the UI itself to be simple, but still be useful at a glance. The status updates whenever certain firewall rules exist, this provides a better UX than the various PowerShell scripts out there.
 
-### What guarantee do you have this won't ban anyone? ([source](https://www.reddit.com/r/DestinyTheGame/comments/j4fn2g/how_to_play_all_destiny_2_content_solo_dont_have/g7ilaeh?utm_source=share&utm_medium=web2x&context=3))
-Good question! A complete guarantee: None.
+### Ehh dude, \<browser name\> blocks the download of the program... is it a virus or what?
+It's not a virus, that much I can guarantee. The reason for the download behaviour of the browsers, is that I didn't sign thr program. I don't have a program to sign it, nor do I have "code-signing certificate", which my Google searches told me I needed. After all, I'm just a Comp. Sci. student 3 weeks into my education.
+Anyhow, you should just be able to click "Keep" on the file (atleast on Google Chrome).
 
-However based on emphirical evidence, I can say that I've not experienced any problems. The very core of the program is based on a PowerShell script which has been floating around this subreddit before, and it has been used without problems.
-
-So to answer your question, all I can say is: I've been using this program for the last week, the same has a buddy of mine. The concept of using the firewall to enable soloplay has been used by the community for a long time, and personally I've used that trick in the last 6 months. All without any problems.
+### Fam, Windows also gives me a warning when I try to open it... You sure about this virus thing?
+Yes, I'm quite sure! The reason for this behaviour is the same as the browser blocking the download of the program. From my expierences with opening the program on a secondary PC, the warning should only happen on the very first start up.
 
 ### Why does the program require Administrator priviledges?
 Firewall handling. 
 That is the reason for the prompt asking for admin priviledges. Windows has made sure a program can't change the firewall without having such rights (which is a good thing). This in turn means the program needs such rights, since that's how it does its thing!
+
+### The program does not work! Why?
+Make sure you're giving it admin priviledges. Other than that, make sure you have the .NET Framework installed (should be preinstalled on any newer Windows 10 installation, but if you are having issues, try reinstalling the latest version).
+You also need to make sure you actually have the Windows firewall activated. The program relies on it, therefore it won't function without it.
 
 ### Does it work with other Firewalls than the Windows one?
 No, unfortunately not. It uses namespaces which works with the Windows Firewall, and not thirdparty ones (e.g. Kaspersky). 
@@ -80,29 +71,33 @@ Note: I haven't tested it myself, but one person has reported you can disable th
 ### Does it mean my firewall will be filled with a lot of wasteful rules after using this program a few times?
 No! Don't worry. I was contemplating on just letting the firewall rules stay, and simply disabling them. However, I know that I'd find it annoying if I were to find unused firewall rules. So I made sure the programs goes in and deletes whatever rules it creates, when you (the user) decides to disable the program.
 
+### I enabled the program, but the game won't load any strikes or anything.
+When using this program, it takes longer to find matches to load into. From my testing, it takes roughly 40 seconds longer to find a strike to load into. Which means, roughly after 1 minute the game finds a strike I can load into.
+
 ### What happens when I disable the program while in a strike or some other activity?
 The game will then be able to matchmake other people into your session. Which simply means, people will join you. Sometimes it takes some time (longest I've experienced was 2 minutes), other times it'll be almost instantly (shortest I've experienced was less than 5 seconds after disabling, two people joined my strike).
+
+### How was the program developed?
+Incredibly enough, Microsofts documentation for firewall handling via C# is... Lacking, if I were to phrase it kindly. But after a lot of Google Searching for information about this subject, I notices a namespace called _NetFwTypeLib_. This namespace (if I am remembering correctly), came from the NuGet package "Firewallmanager" created by cyberxander90. However, this also didn't have any documentation. But the combined strength of Google searches and randomly typing stuff to see what I could set, allowed me to find the right combination.
+
+Feel free to checkout the Soloplay.cs file, inside there are 3 methods: One returns a bool dependent on if a FW rule already exists; one creates a firewall rule with settings given to it via its parameters; the last one goes through the entire FW rules list, and deletes whatever firewall rule it finds, if it matches the supplied firewall rule name.
+
+### What guarantee do you have this won't ban anyone? ([source](https://www.reddit.com/r/DestinyTheGame/comments/j4fn2g/how_to_play_all_destiny_2_content_solo_dont_have/g7ilaeh?utm_source=share&utm_medium=web2x&context=3))
+Good question! A complete guarantee: None.
+
+However based on emphirical evidence, I can say that I've not experienced any problems. The very core of the program is based on a PowerShell script which has been floating around this subreddit before, and it has been used without problems.
+
+So to answer your question, all I can say is: I've been using this program for the last week, the same has a buddy of mine. The concept of using the firewall to enable soloplay has been used by the community for a long time, and personally I've used that trick in the last 6 months. All without any problems.
 
 ### Does it work on Consoles as well?
 No it does not. It's a program which makes use of an API in order to talk with the Windows firewall. Meaning, if you're not using the Windows firewall, the program will not work.
 This unfortunately also means it won't work on Linux (well, since it requires .NET Framework, it won't work anyways, but yeah.)
 
 ### What's up with the Shimoneta picture?
-It's an amazing show. Can only recommend it to people. A funny show which held my attention through the entire show!
-
+It's an amazing series. Can only recommend it to people. A funny show which held my attention through the entire show!
 
 ## Troubleshooting
 
-### Installation Warnings
-Warnings about unsigned code or other security alerts are expected. These can typically be bypassed by following system prompts.
-
-### Firewall Issues
-Ensure that only the default Windows Firewall is active and that no third-party firewall software interferes with rule creation.
-
-### Matchmaking Delays
-Enabling solo play might result in longer matchmaking times. Allow additional time for matches to be found. Long story short, Bungies system needs time to actually realize that it cannot find any people for you to match with.
-
-### Unspecified issues
 If you keep getting matched with other people you can try these solutions:
 
 - Make absolutely sure you are using no other firewall than the default Windows one. If you have any other installed, disable those.
@@ -111,28 +106,14 @@ If you keep getting matched with other people you can try these solutions:
 
 Thanks to BLTplayz and MajorMalarky for the troubleshooting suggestions.
 
-## Command Line Arguments
+## Credits
+Finding out what ports to block was not my doing. On the DestinyTheGame subreddit there already exists a PowerShell script which does what my program does. That is from where I got the port range. I would love to be able to just thank the creator of the script, however I can't seem to find out who exactly created it. Many users has posted the same script many times. So let this be a **thank you** to every single person out there posting the script!
 
-Since release 4.0 (complete rewrite of the program) one can use command line arguments. For now, one only is supported.
+In regards to the creation of the firewall rule, [one specific stackoverflow post](https://stackoverflow.com/a/34018032) has my eternal gratitude. This is the combined result of users [David Christiansen](https://stackoverflow.com/users/20406/david-christiansen) and [Heo Đất Hades](https://stackoverflow.com/users/2958737/heo-%c4%90%e1%ba%a5t-hades).
 
-* ```-PortRange``` specifies what ports should be blocked.
+Massive shoutout to Github user [dheif](https://github.com/dheif). He came up with the design for the new UI, and also coded the "About" section of the program. So thank you very much!
 
+## Ending notes
+This project has been fun so far. Having to start from scratch and search up everything on your own, using whatever resources you might find, having to decide what is actually useful and what's isn't. I know I'll be using this program from now on, and I hope whoever might do the same also has a good experience with it!
 
-
-## Credits & Acknowledgments
-
-* **Original Inspiration for Port Blocking:**
-
-The idea for blocking ports comes from a PowerShell script widely shared on the DestinyTheGame subreddit. Although the original author remains unknown due to multiple reposts, heartfelt thanks go out to everyone who contributed and refined the concept.
-
-* **Firewall Rule Implementation:**
-
-Special thanks to the contributors of this [Stack Overflow post](https://stackoverflow.com/a/34018032), particularly [David Christiansen](https://stackoverflow.com/users/20406/david-christiansen) and [Heo Đất Hades](https://stackoverflow.com/users/2958737/heo-%c4%90%e1%ba%a5t-hades), whose combined efforts made the creation of the firewall rule possible.
-
-* **UI Design:**
-
-A massive shoutout to GitHub user [dheif](https://github.com/dheif) for designing the new UI and coding the "About" section.
-
-* **Community Support:**
-
-I'm extremely thankful towards [BLTplayz](https://github.com/BLTplayz) for providing invaluable support in GitHub issues, as well as to [haloskinner](https://github.com/haloskinner) and [Van-Dame](https://github.com/Van-Dame) for quickly finding solutions when previous versions of the program encountered problems.
+Once again, if any problems are found (or just typos in this readme), feel free to create an issue on the topic. 
