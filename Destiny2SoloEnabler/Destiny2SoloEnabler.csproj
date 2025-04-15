@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\d2soloenabler_icon.ico</ApplicationIcon>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\d2soloenabler_icon.ico" />
+    <None Remove="Assets\github-mark.png" />
+    <None Remove="Resources\Images\d2soloenabler_icon.ico" />
+    <None Remove="Resources\Images\github-mark.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Images\d2soloenabler_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FirewallManager" Version="1.0.2" />
+    <PackageReference Include="GlobalHotkeys" Version="1.0.0.6" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\d2soloenabler_icon.ico" />
+    <Resource Include="Assets\github-mark.png" />
+    <Resource Include="Resources\Images\d2soloenabler_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\github-mark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
