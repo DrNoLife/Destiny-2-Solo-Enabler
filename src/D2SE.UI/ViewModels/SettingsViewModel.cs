@@ -6,9 +6,6 @@ using D2SE.Application.Features.Settings.Queries.GetSettings;
 using D2SE.Domain.Entities;
 using D2SE.Application.Messages;
 using MediatR;
-using D2SE.Application.Features.SoloPlay.Dtos;
-using D2SE.Application.Features.SoloPlay.Commands.Toggle;
-using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
 
 namespace D2SE.UI.ViewModels;

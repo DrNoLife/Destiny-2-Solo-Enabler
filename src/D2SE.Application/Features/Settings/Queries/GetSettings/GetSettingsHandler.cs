@@ -1,4 +1,5 @@
-﻿using D2SE.Domain.Entities;
+﻿using D2SE.Domain.Constants;
+using D2SE.Domain.Entities;
 using D2SE.Domain.Enums;
 using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
@@ -11,11 +12,21 @@ public class GetSettingsHandler(ISettingsService settingsService) : IRequestHand
 
     public Task<AppSettings> Handle(GetSettingsQuery request, CancellationToken cancellationToken)
     {
+        string portRangeToBlock = _settingsService.GetSettingsValue<string>(SettingsNames.CustomPortRange);
+
+        if (String.IsNullOrEmpty(portRangeToBlock))
+        {
+            portRangeToBlock = D2SEConstants.PortRange;
+        }
+
         AppSettings settings = new(
-            _settingsService.GetSettingsValue(SettingsNames.AlwaysOnTop.ToString()),
-            _settingsService.GetSettingsValue(SettingsNames.EnableHotkey.ToString()),
-            _settingsService.GetSettingsValue(SettingsNames.PersistentRules.ToString()),
-            _settingsService.GetSettingsValue(SettingsNames.InvertFunctionality.ToString()));
+            _settingsService.GetSettingsValue<bool>(SettingsNames.AlwaysOnTop),
+            _settingsService.GetSettingsValue<bool>(SettingsNames.EnableHotkey),
+            _settingsService.GetSettingsValue<bool>(SettingsNames.PersistentRules),
+            _settingsService.GetSettingsValue<bool>(SettingsNames.InvertFunctionality),
+            _settingsService.GetSettingsValue<bool>(SettingsNames.EnableNotifications),
+            _settingsService.GetSettingsValue<bool>(SettingsNames.OverridePortRange),
+            portRangeToBlock);
 
         return Task.FromResult(settings);
     }

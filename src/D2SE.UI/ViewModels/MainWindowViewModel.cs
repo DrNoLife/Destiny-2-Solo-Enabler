@@ -2,13 +2,12 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using D2SE.Application.Features.Hotkeys.Commands.Initialize;
-using D2SE.Application.Features.Settings.Queries.GetSettingsValue;
 using D2SE.Application.Features.SoloPlay.Commands.Broadcast;
 using D2SE.Application.Features.SoloPlay.Commands.Disable;
 using D2SE.Application.Features.SoloPlay.Commands.Toggle;
-using D2SE.Application.Features.SoloPlay.Queries.GetStatus;
 using D2SE.Application.Messages;
 using D2SE.Domain.Enums;
+using D2SE.Domain.Interfaces.Infrastructure;
 using MediatR;
 
 namespace D2SE.UI.ViewModels;
@@ -16,6 +15,7 @@ namespace D2SE.UI.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     private readonly ISender _mediatr;
+    private readonly ISettingsService _settingsService;
 
     [ObservableProperty]
     private bool _isAboutDisplayed;
@@ -26,9 +26,10 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isSoloPlayActive;
 
-    public MainWindowViewModel(ISender mediatr)
+    public MainWindowViewModel(ISender mediatr, ISettingsService settingsService)
     {
         _mediatr = mediatr;
+        _settingsService = settingsService;
 
         WeakReferenceMessenger.Default.Register<ClosePageMessage>(this, (r ,m) =>
         {
@@ -53,8 +54,7 @@ public partial class MainWindowViewModel : ObservableObject
         await _mediatr.Send(new BroadcastSoloPlayStatusCommand());
 
         // Check if program should be on top.
-        GetSettingsValueQuery query = new("AlwaysOnTop");
-        bool shouldBeTopmost = await _mediatr.Send(query);
+        bool shouldBeTopmost = _settingsService.GetSettingsValue<bool>(SettingsNames.AlwaysOnTop);
         System.Windows.Application.Current.MainWindow.Topmost = shouldBeTopmost;
 
         await HandleHotkeyRegistration();
@@ -75,7 +75,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task CloseApplication()
     {
-        var shouldPersistRules = await _mediatr.Send(GetSettingsValueQuery.FromSetting(SettingsNames.PersistentRules));
+        var shouldPersistRules = _settingsService.GetSettingsValue<bool>(SettingsNames.PersistentRules);
 
         if (!shouldPersistRules)
         {
