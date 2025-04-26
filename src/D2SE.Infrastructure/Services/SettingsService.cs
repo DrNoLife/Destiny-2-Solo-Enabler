@@ -1,4 +1,5 @@
-﻿using D2SE.Domain.Interfaces.Infrastructure;
+﻿using D2SE.Domain.Enums;
+using D2SE.Domain.Interfaces.Infrastructure;
 using Microsoft.Win32;
 
 namespace D2SE.Infrastructure.Services;
@@ -9,16 +10,48 @@ public class SettingsService : ISettingsService
     private const string SoftwareName = "D2SE";
     private const string RegistryLocation = $@"SOFTWARE\{SoftwareName}";
 
-    public bool GetSettingsValue(string settingsName)
+    public bool CheckIfSettingExists(SettingsNames setting)
+    {
+        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(RegistryLocation, writable: false);
+
+        if (key is null)
+        {
+            return false;
+        }
+
+        return key.GetValue(setting.ToString()) is not null;
+    }
+
+    public T GetSettingsValue<T>(SettingsNames setting)
+        => GetSettingsValue<T>(setting.ToString());
+
+    public void SetSettingsValue(SettingsNames setting, string settingsValue)
+        => SetSettingsValue(setting.ToString(), settingsValue);
+
+    public T GetSettingsValue<T>(string settingsName)
     {
         string value = GetSettingsValueAsString(settingsName);
 
         if (String.IsNullOrEmpty(value))
         {
-            value = "false";
+            value = typeof(T) switch
+            {
+                Type t when t == typeof(bool) => "false",
+                Type t when t == typeof(string) => String.Empty,
+                Type t when t == typeof(int) => "0",
+                _ => throw new NotSupportedException($"Type {typeof(T)} is not supported.")
+            };
         }
 
-        return Convert.ToBoolean(value);
+        object result = typeof(T) switch
+        {
+            Type t when t == typeof(bool) => Convert.ToBoolean(value),
+            Type t when t == typeof(string) => value,
+            Type t when t == typeof(int) => Convert.ToInt32(value),
+            _ => throw new NotSupportedException($"Type {typeof(T)} is not supported.")
+        };
+
+        return (T)result;
     }
 
     public void SetSettingsValue(string settingsName, string settingsValue)

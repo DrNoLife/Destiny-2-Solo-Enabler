@@ -9,9 +9,12 @@ public class FirewallService : IFirewallService
 {
     private Type _firewallPolicyType;
     private INetFwPolicy2 _firewallPolicy;
+    private readonly IAlertService _alertService;
 
-    public FirewallService()
+    public FirewallService(IAlertService alertService)
     {
+        _alertService = alertService;
+
         _firewallPolicyType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2")
             ?? throw new Exception("Failed to access firewall.");
 
@@ -31,13 +34,13 @@ public class FirewallService : IFirewallService
         // Set the values for the rule.
         inboundRule.Action = NET_FW_ACTION_.NET_FW_ACTION_BLOCK;
         inboundRule.Description = FirewallRule.Description;
-        inboundRule.Direction = ruleEntity.IsOut 
-            ? NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT 
+        inboundRule.Direction = ruleEntity.IsOut
+            ? NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT
             : NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
         inboundRule.Enabled = true;
         inboundRule.Name = FirewallRule.RuleName;
-        inboundRule.Protocol = (int)(ruleEntity.IsUDP 
-            ? NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_UDP 
+        inboundRule.Protocol = (int)(ruleEntity.IsUDP
+            ? NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_UDP
             : NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP);
         inboundRule.RemotePorts = ruleEntity.PortValue;
 
@@ -47,18 +50,25 @@ public class FirewallService : IFirewallService
 
     public void CreateFirewallRules(FirewallRule ruleEntity)
     {
-        // Create a total of 4 rules.
-        // Out: true and false.
-        // Udp: true and false.
-        for (int i = 0; i < 2; i++)
+        try
         {
-            ruleEntity = ruleEntity with { IsOut = i == 0 };
-
-            for (int j = 0; j < 2; j++)
+            // Create a total of 4 rules.
+            // Out: true and false.
+            // Udp: true and false.
+            for (int i = 0; i < 2; i++)
             {
-                ruleEntity = ruleEntity with { IsUDP = j == 0 };
-                CreateFirewallRule(ruleEntity);
+                ruleEntity = ruleEntity with { IsOut = i == 0 };
+
+                for (int j = 0; j < 2; j++)
+                {
+                    ruleEntity = ruleEntity with { IsUDP = j == 0 };
+                    CreateFirewallRule(ruleEntity);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            _alertService.ShowAlert("Error creating firewall rule", ex.Message);
         }
     }
 

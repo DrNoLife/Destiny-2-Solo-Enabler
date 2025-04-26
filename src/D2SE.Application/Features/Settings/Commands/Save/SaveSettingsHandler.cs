@@ -6,21 +6,27 @@ using MediatR;
 
 namespace D2SE.Application.Features.Settings.Commands.Save;
 
-public class SaveSettingsHandler(ISettingsService settingsService, ISender mediatr) : IRequestHandler<SaveSettingsCommand, bool>
+public class SaveSettingsHandler(ISettingsService settingsService, ISender mediatr, IAlertService alertService) : IRequestHandler<SaveSettingsCommand, bool>
 {
     private readonly ISettingsService _settingsService = settingsService;
     private readonly ISender _mediatr = mediatr;   
+    private readonly IAlertService _alertService = alertService;
 
     public async Task<bool> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            _settingsService.SetSettingsValue(SettingsNames.AlwaysOnTop.ToString(), request.Settings.AlwaysOnTop.ToString());
-            _settingsService.SetSettingsValue(SettingsNames.EnableHotkey.ToString(), request.Settings.EnableHotkey.ToString());
-            _settingsService.SetSettingsValue(SettingsNames.PersistentRules.ToString(), request.Settings.PersistentRules.ToString());
-            _settingsService.SetSettingsValue(SettingsNames.InvertFunctionality.ToString(), request.Settings.InvertFunctionality.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.AlwaysOnTop, request.Settings.AlwaysOnTop.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.EnableHotkey, request.Settings.EnableHotkey.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.PersistentRules, request.Settings.PersistentRules.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.InvertFunctionality, request.Settings.InvertFunctionality.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.EnableNotifications, request.Settings.EnableNotifications.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.OverridePortRange, request.Settings.OverridePortsToBlock.ToString());
+            _settingsService.SetSettingsValue(SettingsNames.CustomPortRange, request.Settings.CustomPortRangeToBlock.ToString());
 
             await HandleHotkeyRegistration(request, cancellationToken);
+
+            _alertService.ShowAlert("Settings saved");
 
             return true;
         }

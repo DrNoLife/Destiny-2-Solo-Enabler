@@ -7,16 +7,24 @@ using System.Windows.Input;
 
 namespace D2SE.Infrastructure.Services;
 
-public class HotkeyService(IHotkeyNotification hotkeyNotification) : IHotkeyService
+public class HotkeyService(IHotkeyNotification hotkeyNotification, IAlertService alertService) : IHotkeyService
 {
     private readonly IHotkeyNotification _hotkeyNotification = hotkeyNotification;
+    private readonly IAlertService _alertService = alertService;
 
     public void RegisterHotkeys()
     {
-        HotkeyManager.Current.AddOrReplace(
+        try
+        {
+            HotkeyManager.Current.AddOrReplace(
             Hotkeys.ToggleSoloPlay.ToString(),
-            Key.K, ModifierKeys.Alt | ModifierKeys.Shift, 
+            Key.K, ModifierKeys.Alt | ModifierKeys.Shift,
             async (sender, e) => await OnHotkeyPressed(sender, e));
+        }
+        catch (HotkeyAlreadyRegisteredException ex) 
+        {
+            _alertService.ShowAlert("Failed to register hotkey", ex.Message, true);
+        }
     }
 
     public void UnregisterHotkeys()

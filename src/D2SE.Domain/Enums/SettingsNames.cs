@@ -5,5 +5,8 @@ public enum SettingsNames
     AlwaysOnTop,
     EnableHotkey,
     PersistentRules,
-    InvertFunctionality
+    InvertFunctionality,
+    OverridePortRange,
+    CustomPortRange,
+    EnableNotifications
 }
