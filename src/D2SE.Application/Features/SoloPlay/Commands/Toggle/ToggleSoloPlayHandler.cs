@@ -32,7 +32,7 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService, ISender med
 
             _firewallService.CreateFirewallRules(ruleEntity);
             Debug.WriteLine("Want to add rules");
-            _alertService.ShowAlert("Solo play enabled");
+            _alertService.ShowAlert("Solo play enabled", $"Blocking ports: {ruleEntity.PortValue}");
         }
 
 
@@ -61,12 +61,17 @@ public class ToggleSoloPlayHandler(IFirewallService firewallService, ISender med
         FirewallRule ruleEntity = FirewallRule.CreateRule();
 
         // See if the user has specified custom port range using the program itself.
-        var customPortRange = _settingsService.GetSettingsValue<string>(SettingsNames.CustomPortRange);
-        if (!String.IsNullOrEmpty(customPortRange))
+        var userHasChangedCustomPortSetting = _settingsService.CheckIfSettingExists(SettingsNames.OverridePortRange);
+        var userOverwrotePortRange = _settingsService.GetSettingsValue<bool>(SettingsNames.OverridePortRange);
+        if (userHasChangedCustomPortSetting && userOverwrotePortRange)
         {
-            ruleEntity = ruleEntity with { PortValue = customPortRange };
+            var customPortRange = _settingsService.GetSettingsValue<string>(SettingsNames.CustomPortRange);
+            if (!String.IsNullOrEmpty(customPortRange))
+            {
+                ruleEntity = ruleEntity with { PortValue = customPortRange };
+            }
         }
-
+        
         // See if we can get the port range from command line arguments.
         var portRangeFromCommandLineArguments = GetPortRangeFromCommandLineArguments();
         if (!String.IsNullOrEmpty(portRangeFromCommandLineArguments))

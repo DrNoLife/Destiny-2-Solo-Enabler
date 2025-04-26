@@ -19,12 +19,16 @@ public class GetSettingsHandler(ISettingsService settingsService) : IRequestHand
             portRangeToBlock = D2SEConstants.PortRange;
         }
 
+        bool enableNotifications = _settingsService.CheckIfSettingExists(SettingsNames.EnableNotifications)
+            ? _settingsService.GetSettingsValue<bool>(SettingsNames.EnableNotifications)
+            : true;
+
         AppSettings settings = new(
             _settingsService.GetSettingsValue<bool>(SettingsNames.AlwaysOnTop),
             _settingsService.GetSettingsValue<bool>(SettingsNames.EnableHotkey),
             _settingsService.GetSettingsValue<bool>(SettingsNames.PersistentRules),
             _settingsService.GetSettingsValue<bool>(SettingsNames.InvertFunctionality),
-            _settingsService.GetSettingsValue<bool>(SettingsNames.EnableNotifications),
+            enableNotifications,
             _settingsService.GetSettingsValue<bool>(SettingsNames.OverridePortRange),
             portRangeToBlock);
 
