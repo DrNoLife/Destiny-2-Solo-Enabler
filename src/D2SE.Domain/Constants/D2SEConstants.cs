@@ -3,5 +3,5 @@
 public static class D2SEConstants
 {
     public const string ProgramName = "Destiny 2 - Solo-Enabler";
-    public const string PortRange = "27000-27202,3097";
+    public const string PortRange = "27000-27204,3097";
 }
