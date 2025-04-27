@@ -1,8 +1,6 @@
 # Destiny 2 Solo Enabler
 Destiny 2 Solo Enabler is a lightweight tool designed to help players load into Destiny 2 sessions without being matched with other players. By managing Windows Firewall rules, the program effectively blocks matchmaking ports, enabling solo play for strikes, forges, story missions, and more.
 
-![Total Downloads](https://img.shields.io/github/downloads/DrNoLife/Destiny-2-Solo-Enabler/total?style=social) ![Last Commit](https://img.shields.io/github/last-commit/DrNoLife/Destiny-2-Solo-enabler/master)
-
 ## Features
 
 * **Matchmaking Block:**
